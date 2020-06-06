@@ -217,7 +217,7 @@ j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df")
 j_data
 ```
 
-<div class="countdown" id="timer_5edb6617" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5edbfa6f" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ---
@@ -1249,7 +1249,7 @@ null_distribution %&gt;%
   theme_bw(base_size = 20)
 ```
 
-<div class="countdown" id="timer_5edb65fe" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5edbf922" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -2220,7 +2220,7 @@ null_distribution %&gt;%
   theme_bw(base_size = 20)  
 ```
 
-<div class="countdown" id="timer_5edb693e" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5edbfb5d" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -3688,6 +3688,15 @@ aov(Length ~ Material,
 
 ---
 
+class: left, bottom
+
+background-image: url(https://images.unsplash.com/photo-1505778276668-26b3ff7af103?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1643&amp;q=80)
+background-size: contain
+
+# Exploring the data with PCA and k-means
+
+---
+
 # Let's do a Principal Components Analysis to reduce our multivariate data into smaller set of variables to observe trends, clusters and outliers
 
 ---
@@ -3745,6 +3754,13 @@ background-size: contain
 
 ---
 
+class: left, bottom
+
+background-image: url(figures/cascalheira-bicho-2020.png)
+background-size: contain
+
+---
+
 
 
 class: split-40
@@ -3754,36 +3770,88 @@ Prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-# prepare data
+*library(tidyverse)
+```
+]
+ 
+.right-output-pca-1-auto[
 
-*j_data
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+library(tidyverse)  
+
+# get the data
+*nb_data &lt;- rio::import("https://bit.ly/37is3Dj")
+```
+]
+ 
+.right-output-pca-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+library(tidyverse)  
+
+# get the data
+nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
+
+# prepare the data
+*nb_data
 ```
 ]
  
 .right-output-pca-1-auto[
 
 ```
-# A tibble: 9,752 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
- 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
- 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
- 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
- 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
- 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
- 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
- 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
- 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
-10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
-# … with 9,742 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+            Sites EstimatedArea DepositThickness SampledVolume Artifacts Cores
+1            AR I            50             0.25          0.50      2048    84
+2  CPM III Trench             8             0.15          0.45      1487    24
+3     CPM I Upper            70             0.35          1.40      4703   217
+4    CPM II Upper            70             0.25          1.00      2393    34
+5   CPM II Middle            40             0.25          1.75      2260    41
+6     CPM I Lower            70             0.30          2.10      1766    78
+7   CPM III Upper            60             0.25          0.75      2148    90
+8       CPM III S           100             0.35          1.40      5179    75
+9           CPM V            50             0.20          1.80      2701    33
+10          CR II           100             0.25          1.50      2151    46
+11             PC           100             0.25          1.00      2431    29
+12             QS             5             0.05          0.25      1438     8
+13   VB Shelter 2             2             0.50          1.00        54     0
+14   VB Shelter Z             8             0.15          0.90      1156    22
+15   VB Shelter B            30             0.25          6.00     12819    80
+16  Picareiro F/G            25             0.35          5.60      1954    19
+   Blanks Chips RetouchedTools ToolTypes Features
+1     890   849            204        38        0
+2     807   529             90        35        1
+3    1601  1241           1481        72        0
+4    1180   925            187        43        0
+5    1047   995            120        37        0
+6     843   585            202        45        1
+7    1047   699            268        50        0
+8    2597  1841            382        55        2
+9    1033  1397            162        39        0
+10   1264   607            171        41        1
+11    956  1148            205        41        0
+12    378   975              8         2        0
+13      8    13             31         3        0
+14    323   581             33        15        0
+15   2304  7867            141        31        1
+16    261  1510            121        43        1
 ```
 ]
 
@@ -3795,37 +3863,78 @@ Prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-# prepare data
+library(tidyverse)  
 
-j_data %&gt;%  
-* filter(Square == "B")
+# get the data
+nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
+
+# prepare the data
+nb_data %&gt;%  
+* mutate(chipFreq = Chips/Artifacts,
+*        coreFreq = Cores/Artifacts,
+*        blankFreq = Blanks/Artifacts,
+*        retFreq  = RetouchedTools/Artifacts,
+*        featFreq = Features/SampledVolume,
+*        toolDiv = ToolTypes/sqrt(RetouchedTools),
+*        lithDens = Artifacts/SampledVolume
+* )
 ```
 ]
  
 .right-output-pca-1-auto[
 
 ```
-# A tibble: 5,302 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
- 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
- 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
- 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
- 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
- 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
- 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
- 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
- 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
-10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
-# … with 5,292 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+            Sites EstimatedArea DepositThickness SampledVolume Artifacts Cores
+1            AR I            50             0.25          0.50      2048    84
+2  CPM III Trench             8             0.15          0.45      1487    24
+3     CPM I Upper            70             0.35          1.40      4703   217
+4    CPM II Upper            70             0.25          1.00      2393    34
+5   CPM II Middle            40             0.25          1.75      2260    41
+6     CPM I Lower            70             0.30          2.10      1766    78
+7   CPM III Upper            60             0.25          0.75      2148    90
+8       CPM III S           100             0.35          1.40      5179    75
+9           CPM V            50             0.20          1.80      2701    33
+10          CR II           100             0.25          1.50      2151    46
+11             PC           100             0.25          1.00      2431    29
+12             QS             5             0.05          0.25      1438     8
+13   VB Shelter 2             2             0.50          1.00        54     0
+14   VB Shelter Z             8             0.15          0.90      1156    22
+15   VB Shelter B            30             0.25          6.00     12819    80
+16  Picareiro F/G            25             0.35          5.60      1954    19
+   Blanks Chips RetouchedTools ToolTypes Features  chipFreq    coreFreq blankFreq
+1     890   849            204        38        0 0.4145508 0.041015625 0.4345703
+2     807   529             90        35        1 0.3557498 0.016139879 0.5427034
+3    1601  1241           1481        72        0 0.2638741 0.046140761 0.3404210
+4    1180   925            187        43        0 0.3865441 0.014208107 0.4931049
+5    1047   995            120        37        0 0.4402655 0.018141593 0.4632743
+6     843   585            202        45        1 0.3312571 0.044167610 0.4773499
+7    1047   699            268        50        0 0.3254190 0.041899441 0.4874302
+8    2597  1841            382        55        2 0.3554740 0.014481560 0.5014482
+9    1033  1397            162        39        0 0.5172158 0.012217697 0.3824509
+10   1264   607            171        41        1 0.2821943 0.021385402 0.5876337
+11    956  1148            205        41        0 0.4722336 0.011929247 0.3932538
+12    378   975              8         2        0 0.6780250 0.005563282 0.2628651
+13      8    13             31         3        0 0.2407407 0.000000000 0.1481481
+14    323   581             33        15        0 0.5025952 0.019031142 0.2794118
+15   2304  7867            141        31        1 0.6136984 0.006240736 0.1797332
+16    261  1510            121        43        1 0.7727738 0.009723644 0.1335722
+       retFreq  featFreq   toolDiv  lithDens
+1  0.099609375 0.0000000 2.6605322 4096.0000
+2  0.060524546 2.2222222 3.6893239 3304.4444
+3  0.314905380 0.0000000 1.8709189 3359.2857
+4  0.078144588 0.0000000 3.1444714 2393.0000
+5  0.053097345 0.0000000 3.3776224 1291.4286
+6  0.114382786 0.4761905 3.1661890  840.9524
+7  0.124767225 0.0000000 3.0542361 2864.0000
+8  0.073759413 1.4285714 2.8140448 3699.2857
+9  0.059977786 0.0000000 3.0641294 1500.5556
+10 0.079497908 0.6666667 3.1353484 1434.0000
+11 0.084327437 0.0000000 2.8635642 2431.0000
+12 0.005563282 0.0000000 0.7071068 5752.0000
+13 0.574074074 0.0000000 0.5388159   54.0000
+14 0.028546713 0.0000000 2.6111648 1284.4444
+15 0.010999298 0.1666667 2.6106710 2136.5000
+16 0.061924258 0.1785714 3.9090909  348.9286
 ```
 ]
 
@@ -3837,68 +3946,64 @@ Prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-# prepare data
+library(tidyverse)  
 
-j_data %&gt;%  
-  filter(Square == "B") %&gt;%  
-* select(Spit, Length, Thick, Width)
+# get the data
+nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
+
+# prepare the data
+nb_data %&gt;%  
+  mutate(chipFreq = Chips/Artifacts,  
+         coreFreq = Cores/Artifacts,  
+         blankFreq = Blanks/Artifacts,  
+         retFreq  = RetouchedTools/Artifacts,  
+         featFreq = Features/SampledVolume,  
+         toolDiv = ToolTypes/sqrt(RetouchedTools),  
+         lithDens = Artifacts/SampledVolume  
+  ) %&gt;%  
+* select(chipFreq, coreFreq, blankFreq,
+*        retFreq, featFreq, toolDiv,
+*        lithDens, EstimatedArea)
 ```
 ]
  
 .right-output-pca-1-auto[
 
 ```
-# A tibble: 5,302 x 4
-    Spit Length Thick Width
-   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1     1  22.0   3.34 20.4 
- 2     1  14.6   2.74 19.1 
- 3     1  29.6   7.25 11.6 
- 4     1   5.83  2.05  6.54
- 5     1   7.07  1.13  6.56
- 6     1  11.1   4.79 12.7 
- 7     1   5.72  1.16  4.28
- 8     1   8.37  1.09  4.98
- 9     1  10.7   3.91  5.2 
-10     1  14.3   3.13  6.07
-# … with 5,292 more rows
-```
-]
-
----
-class: split-40
-count: false
- 
-Prepare data for PCA
-.left-code-pca-1-auto[
-
-```r
-# prepare data
-
-j_data %&gt;%  
-  filter(Square == "B") %&gt;%  
-  select(Spit, Length, Thick, Width)  %&gt;%  
-* drop_na
-```
-]
- 
-.right-output-pca-1-auto[
-
-```
-# A tibble: 5,301 x 4
-    Spit Length Thick Width
-   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1     1  22.0   3.34 20.4 
- 2     1  14.6   2.74 19.1 
- 3     1  29.6   7.25 11.6 
- 4     1   5.83  2.05  6.54
- 5     1   7.07  1.13  6.56
- 6     1  11.1   4.79 12.7 
- 7     1   5.72  1.16  4.28
- 8     1   8.37  1.09  4.98
- 9     1  10.7   3.91  5.2 
-10     1  14.3   3.13  6.07
-# … with 5,291 more rows
+    chipFreq    coreFreq blankFreq     retFreq  featFreq   toolDiv  lithDens
+1  0.4145508 0.041015625 0.4345703 0.099609375 0.0000000 2.6605322 4096.0000
+2  0.3557498 0.016139879 0.5427034 0.060524546 2.2222222 3.6893239 3304.4444
+3  0.2638741 0.046140761 0.3404210 0.314905380 0.0000000 1.8709189 3359.2857
+4  0.3865441 0.014208107 0.4931049 0.078144588 0.0000000 3.1444714 2393.0000
+5  0.4402655 0.018141593 0.4632743 0.053097345 0.0000000 3.3776224 1291.4286
+6  0.3312571 0.044167610 0.4773499 0.114382786 0.4761905 3.1661890  840.9524
+7  0.3254190 0.041899441 0.4874302 0.124767225 0.0000000 3.0542361 2864.0000
+8  0.3554740 0.014481560 0.5014482 0.073759413 1.4285714 2.8140448 3699.2857
+9  0.5172158 0.012217697 0.3824509 0.059977786 0.0000000 3.0641294 1500.5556
+10 0.2821943 0.021385402 0.5876337 0.079497908 0.6666667 3.1353484 1434.0000
+11 0.4722336 0.011929247 0.3932538 0.084327437 0.0000000 2.8635642 2431.0000
+12 0.6780250 0.005563282 0.2628651 0.005563282 0.0000000 0.7071068 5752.0000
+13 0.2407407 0.000000000 0.1481481 0.574074074 0.0000000 0.5388159   54.0000
+14 0.5025952 0.019031142 0.2794118 0.028546713 0.0000000 2.6111648 1284.4444
+15 0.6136984 0.006240736 0.1797332 0.010999298 0.1666667 2.6106710 2136.5000
+16 0.7727738 0.009723644 0.1335722 0.061924258 0.1785714 3.9090909  348.9286
+   EstimatedArea
+1             50
+2              8
+3             70
+4             70
+5             40
+6             70
+7             60
+8            100
+9             50
+10           100
+11           100
+12             5
+13             2
+14             8
+15            30
+16            25
 ```
 ]
 
@@ -3932,7 +4037,7 @@ Compute PCA
 .left-code-pca-2-auto[
 
 ```r
-*library(broom)
+*library(FactoMineR)
 ```
 ]
  
@@ -3948,30 +4053,55 @@ Compute PCA
 .left-code-pca-2-auto[
 
 ```r
-library(broom)  
+library(FactoMineR)  
+*row.names(working_data) &lt;- nb_data$Sites
+```
+]
+ 
+.right-output-pca-2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+library(FactoMineR)  
+row.names(working_data) &lt;- nb_data$Sites  
 
 # compute PCA
-* j_data5
+*PCA(working_data,
+*   graph = FALSE)
 ```
 ]
  
 .right-output-pca-2-auto[
 
 ```
-# A tibble: 5,301 x 4
-    Spit Length Thick Width
-   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1     1  22.0   3.34 20.4 
- 2     1  14.6   2.74 19.1 
- 3     1  29.6   7.25 11.6 
- 4     1   5.83  2.05  6.54
- 5     1   7.07  1.13  6.56
- 6     1  11.1   4.79 12.7 
- 7     1   5.72  1.16  4.28
- 8     1   8.37  1.09  4.98
- 9     1  10.7   3.91  5.2 
-10     1  14.3   3.13  6.07
-# … with 5,291 more rows
+**Results for the Principal Component Analysis (PCA)**
+The analysis was performed on 16 individuals, described by 8 variables
+*The results are available in the following objects:
+
+   name               description                          
+1  "$eig"             "eigenvalues"                        
+2  "$var"             "results for the variables"          
+3  "$var$coord"       "coord. for the variables"           
+4  "$var$cor"         "correlations variables - dimensions"
+5  "$var$cos2"        "cos2 for the variables"             
+6  "$var$contrib"     "contributions of the variables"     
+7  "$ind"             "results for the individuals"        
+8  "$ind$coord"       "coord. for the individuals"         
+9  "$ind$cos2"        "cos2 for the individuals"           
+10 "$ind$contrib"     "contributions of the individuals"   
+11 "$call"            "summary statistics"                 
+12 "$call$centre"     "mean of the variables"              
+13 "$call$ecart.type" "standard error of the variables"    
+14 "$call$row.w"      "weights for the individuals"        
+15 "$call$col.w"      "weights for the variables"          
 ```
 ]
 
@@ -3983,89 +4113,38 @@ Compute PCA
 .left-code-pca-2-auto[
 
 ```r
-library(broom)  
+library(FactoMineR)  
+row.names(working_data) &lt;- nb_data$Sites  
 
 # compute PCA
-  j_data5 %&gt;%  
-* nest(data=everything())
+PCA(working_data,  
+    graph = FALSE)  
 ```
 ]
  
 .right-output-pca-2-auto[
 
 ```
-# A tibble: 1 x 1
-  data                
-  &lt;list&gt;              
-1 &lt;tibble [5,301 × 4]&gt;
-```
-]
+**Results for the Principal Component Analysis (PCA)**
+The analysis was performed on 16 individuals, described by 8 variables
+*The results are available in the following objects:
 
----
-class: split-40
-count: false
- 
-Compute PCA
-.left-code-pca-2-auto[
-
-```r
-library(broom)  
-
-# compute PCA
-  j_data5 %&gt;%  
-  nest(data=everything()) %&gt;%  
-* mutate(pca = map(data,
-*                  ~prcomp(.x %&gt;%
-*                            select(-Spit),
-*                          center = TRUE,
-*                          scale = TRUE)),
-*        pca_aug = map2(pca,data,
-*                       ~augment(.x,
-*                                data = .y)))
-```
-]
- 
-.right-output-pca-2-auto[
-
-```
-# A tibble: 1 x 3
-  data                 pca      pca_aug             
-  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
-1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
-```
-]
-
----
-class: split-40
-count: false
- 
-Compute PCA
-.left-code-pca-2-auto[
-
-```r
-library(broom)  
-
-# compute PCA
-  j_data5 %&gt;%  
-  nest(data=everything()) %&gt;%  
-  mutate(pca = map(data,  
-                   ~prcomp(.x %&gt;%  
-                             select(-Spit),  
-                           center = TRUE,  
-                           scale = TRUE)),  
-         pca_aug = map2(pca,data,  
-                        ~augment(.x,  
-                                 data = .y)))  
-```
-]
- 
-.right-output-pca-2-auto[
-
-```
-# A tibble: 1 x 3
-  data                 pca      pca_aug             
-  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
-1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+   name               description                          
+1  "$eig"             "eigenvalues"                        
+2  "$var"             "results for the variables"          
+3  "$var$coord"       "coord. for the variables"           
+4  "$var$cor"         "correlations variables - dimensions"
+5  "$var$cos2"        "cos2 for the variables"             
+6  "$var$contrib"     "contributions of the variables"     
+7  "$ind"             "results for the individuals"        
+8  "$ind$coord"       "coord. for the individuals"         
+9  "$ind$cos2"        "cos2 for the individuals"           
+10 "$ind$contrib"     "contributions of the individuals"   
+11 "$call"            "summary statistics"                 
+12 "$call$centre"     "mean of the variables"              
+13 "$call$ecart.type" "standard error of the variables"    
+14 "$call$row.w"      "weights for the individuals"        
+15 "$call$col.w"      "weights for the variables"          
 ```
 ]
 
@@ -4099,19 +4178,26 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# how much variance is
-# explained by the PCs
-* j_data5_pca
+# inspect eigenvalues, values &gt;1
+# indicate that component captures more
+# variability that any of
+# the original measurement variables
+*res.pca$eig
 ```
 ]
  
 .right-output-pca-3-auto[
 
 ```
-# A tibble: 1 x 3
-  data                 pca      pca_aug             
-  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
-1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
 ]
 
@@ -4123,30 +4209,29 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# how much variance is
-# explained by the PCs
-  j_data5_pca %&gt;%  
-* unnest(pca_aug)
+# inspect eigenvalues, values &gt;1
+# indicate that component captures more
+# variability that any of
+# the original measurement variables
+res.pca$eig  
+
+# inspect distribution of PCs
+*library(factoextra)
 ```
 ]
  
 .right-output-pca-3-auto[
 
 ```
-# A tibble: 5,301 x 10
-   data    pca   .rownames  Spit Length Thick Width .fittedPC1 .fittedPC2 .fittedPC3
-   &lt;list&gt;  &lt;lis&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
- 1 &lt;tibbl… &lt;prc… 1             1  22.0   3.34 20.4     -2.06      -0.634      1.18  
- 2 &lt;tibbl… &lt;prc… 2             1  14.6   2.74 19.1     -1.18      -1.06       0.601 
- 3 &lt;tibbl… &lt;prc… 3             1  29.6   7.25 11.6     -2.70       1.52       0.724 
- 4 &lt;tibbl… &lt;prc… 4             1   5.83  2.05  6.54     0.874     -0.0909    -0.254 
- 5 &lt;tibbl… &lt;prc… 5             1   7.07  1.13  6.56     0.959     -0.112      0.113 
- 6 &lt;tibbl… &lt;prc… 6             1  11.1   4.79 12.7     -0.722     -0.218     -0.382 
- 7 &lt;tibbl… &lt;prc… 7             1   5.72  1.16  4.28     1.28       0.0993    -0.0605
- 8 &lt;tibbl… &lt;prc… 8             1   8.37  1.09  4.98     1.00       0.186      0.225 
- 9 &lt;tibbl… &lt;prc… 9             1  10.7   3.91  5.2      0.195      0.646     -0.303 
-10 &lt;tibbl… &lt;prc… 10            1  14.3   3.13  6.07    -0.0270     0.693      0.264 
-# … with 5,291 more rows
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
 ]
 
@@ -4158,24 +4243,33 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# how much variance is
-# explained by the PCs
-  j_data5_pca %&gt;%  
-  unnest(pca_aug) %&gt;%  
-* summarize_at(vars(contains("PC",
-*                            ignore.case = FALSE)),
-*              funs(var))
+# inspect eigenvalues, values &gt;1
+# indicate that component captures more
+# variability that any of
+# the original measurement variables
+res.pca$eig  
+
+# inspect distribution of PCs
+library(factoextra)  
+*fviz_screeplot(res.pca)
 ```
 ]
  
 .right-output-pca-3-auto[
 
 ```
-# A tibble: 1 x 3
-  .fittedPC1 .fittedPC2 .fittedPC3
-       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-1       2.36      0.343      0.294
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
+
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_3_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -4186,95 +4280,33 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# how much variance is
-# explained by the PCs
-  j_data5_pca %&gt;%  
-  unnest(pca_aug) %&gt;%  
-  summarize_at(vars(contains("PC",  
-                             ignore.case = FALSE)),  
-               funs(var)) %&gt;%  
-* gather(key = pc, value = variance)
+# inspect eigenvalues, values &gt;1
+# indicate that component captures more
+# variability that any of
+# the original measurement variables
+res.pca$eig  
+
+# inspect distribution of PCs
+library(factoextra)  
+fviz_screeplot(res.pca)  
 ```
 ]
  
 .right-output-pca-3-auto[
 
 ```
-# A tibble: 3 x 2
-  pc         variance
-  &lt;chr&gt;         &lt;dbl&gt;
-1 .fittedPC1    2.36 
-2 .fittedPC2    0.343
-3 .fittedPC3    0.294
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
-]
 
----
-class: split-40
-count: false
- 
-Inspect PCA
-.left-code-pca-3-auto[
-
-```r
-# how much variance is
-# explained by the PCs
-  j_data5_pca %&gt;%  
-  unnest(pca_aug) %&gt;%  
-  summarize_at(vars(contains("PC",  
-                             ignore.case = FALSE)),  
-               funs(var)) %&gt;%  
-  gather(key = pc, value = variance) %&gt;%  
-* mutate(var_exp = variance / sum(variance),
-*        cum_var_exp = cumsum(var_exp),
-*        pc = str_replace(pc, ".fitted", ""))
-```
-]
- 
-.right-output-pca-3-auto[
-
-```
-# A tibble: 3 x 4
-  pc    variance var_exp cum_var_exp
-  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
-1 PC1      2.36   0.788        0.788
-2 PC2      0.343  0.114        0.902
-3 PC3      0.294  0.0979       1    
-```
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA
-.left-code-pca-3-auto[
-
-```r
-# how much variance is
-# explained by the PCs
-  j_data5_pca %&gt;%  
-  unnest(pca_aug) %&gt;%  
-  summarize_at(vars(contains("PC",  
-                             ignore.case = FALSE)),  
-               funs(var)) %&gt;%  
-  gather(key = pc, value = variance) %&gt;%  
-  mutate(var_exp = variance / sum(variance),  
-         cum_var_exp = cumsum(var_exp),  
-         pc = str_replace(pc, ".fitted", ""))  
-```
-]
- 
-.right-output-pca-3-auto[
-
-```
-# A tibble: 3 x 4
-  pc    variance var_exp cum_var_exp
-  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
-1 PC1      2.36   0.788        0.788
-2 PC2      0.343  0.114        0.902
-3 PC3      0.294  0.0979       1    
-```
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_4_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
@@ -4303,302 +4335,46 @@ Inspect PCA
 class: split-40
 count: false
  
-Inspect PCA variance explained
+Visualise PCA results
 .left-code-pca-4-auto[
 
 ```r
-*var_exp
+# create biplot
+*fviz_pca_biplot(res.pca)
 ```
 ]
  
 .right-output-pca-4-auto[
-
-```
-# A tibble: 3 x 4
-  pc    variance var_exp cum_var_exp
-  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
-1 PC1      2.36   0.788        0.788
-2 PC2      0.343  0.114        0.902
-3 PC3      0.294  0.0979       1    
-```
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_1_output-1.png" width="432" /&gt;
 ]
 
 ---
 class: split-40
 count: false
  
-Inspect PCA variance explained
+Visualise PCA results
 .left-code-pca-4-auto[
 
 ```r
-var_exp %&gt;%  
-* rename(
-*   `Variance Explained` = var_exp,
-*   `Cumulative Variance Explained` = cum_var_exp
-* )
+# create biplot
+fviz_pca_biplot(res.pca)  
 ```
 ]
  
 .right-output-pca-4-auto[
-
-```
-# A tibble: 3 x 4
-  pc    variance `Variance Explained` `Cumulative Variance Explained`
-  &lt;chr&gt;    &lt;dbl&gt;                &lt;dbl&gt;                           &lt;dbl&gt;
-1 PC1      2.36                0.788                            0.788
-2 PC2      0.343               0.114                            0.902
-3 PC3      0.294               0.0979                           1    
-```
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-* pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,
-*               names_to = "key",
-*              values_to = "value")
-```
-]
- 
-.right-output-pca-4-auto[
-
-```
-# A tibble: 6 x 4
-  pc    variance key                            value
-  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt;
-1 PC1      2.36  Variance Explained            0.788 
-2 PC1      2.36  Cumulative Variance Explained 0.788 
-3 PC2      0.343 Variance Explained            0.114 
-4 PC2      0.343 Cumulative Variance Explained 0.902 
-5 PC3      0.294 Variance Explained            0.0979
-6 PC3      0.294 Cumulative Variance Explained 1     
-```
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-* ggplot(aes(pc,
-*            value,
-*            group = key))
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_4_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-* geom_point()
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_5_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-  geom_point() +  
-* geom_line()
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_6_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-  geom_point() +  
-  geom_line() +  
-* facet_wrap(~key, scales = "free_y")
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_7_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-  geom_point() +  
-  geom_line() +  
-  facet_wrap(~key, scales = "free_y") +  
-* theme_bw(base_size = 20)
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_8_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-  geom_point() +  
-  geom_line() +  
-  facet_wrap(~key, scales = "free_y") +  
-  theme_bw(base_size = 20) +  
-* lims(y = c(0, 1))
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_9_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA variance explained
-.left-code-pca-4-auto[
-
-```r
-var_exp %&gt;%  
-  rename(  
-    `Variance Explained` = var_exp,  
-    `Cumulative Variance Explained` = cum_var_exp  
-  ) %&gt;%  
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
-                names_to = "key",  
-               values_to = "value") %&gt;%  
-  ggplot(aes(pc,  
-             value,  
-             group = key)) +  
-  geom_point() +  
-  geom_line() +  
-  facet_wrap(~key, scales = "free_y") +  
-  theme_bw(base_size = 20) +  
-  lims(y = c(0, 1)) +  
-* labs(y = "Variance",
-*      title = "Variance explained by each principal component")
-```
-]
- 
-.right-output-pca-4-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_10_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_2_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
 .left-code-pca-4-auto {
   color: #777;
-  width: 70%;
+  width: 45%;
   height: 92%;
   float: left;
   font-size: 80%
 }
 .right-output-pca-4-auto {
-  width: 28%;
+  width: 50%;
   float: right;
   padding-left: 1%;
 }
@@ -4608,175 +4384,64 @@ var_exp %&gt;%
 
 ---
 
+# Your turn: PCA
 
-
-class: split-40
-count: false
- 
-Visualise PCA results
-.left-code-pca-5-auto[
 
 ```r
-*library(ggfortify)
+library(rio)
+
+# get the data
+nb_data &lt;- import("https://bit.ly/37is3Dj")
+
+# prepare the data
+working_data &lt;- nb_data %&gt;%
+  mutate(chipFreq = Chips/Artifacts,
+         coreFreq = Cores/Artifacts,
+         blankFreq = Blanks/Artifacts,
+         retFreq  = RetouchedTools/Artifacts,
+         featFreq = Features/SampledVolume,
+         toolDiv = ToolTypes/sqrt(RetouchedTools),
+         lithDens = Artifacts/SampledVolume) %&gt;%
+  select(chipFreq, coreFreq, blankFreq, 
+         retFreq, featFreq, toolDiv, 
+         lithDens, EstimatedArea)
 ```
-]
- 
-.right-output-pca-5-auto[
 
-]
-
----
-class: split-40
-count: false
- 
-Visualise PCA results
-.left-code-pca-5-auto[
 
 ```r
-library(ggfortify)  
-*j_data5_pca
-```
-]
- 
-.right-output-pca-5-auto[
+library(FactoMineR)
+row.names(working_data) &lt;- nb_data$Sites
 
+# compute PCA
+res.pca &lt;- PCA(working_data, 
+               graph = FALSE)
 ```
-# A tibble: 1 x 3
-  data                 pca      pca_aug             
-  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
-1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
-```
-]
+
+<div class="countdown" id="timer_5edbfbaf" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
 
 ---
-class: split-40
-count: false
- 
-Visualise PCA results
-.left-code-pca-5-auto[
+
 
 ```r
-library(ggfortify)  
-j_data5_pca %&gt;%  
-* mutate(
-*   pca_graph = map2(.x = pca, .y = data,
-*     ~ autoplot(.x,
-*                loadings = TRUE,
-*                loadings.label = TRUE,
-*                loadings.label.repel = TRUE,
-*                data = .y,
-*                label = TRUE,
-*                label.label = "Spit",
-*                label.repel = TRUE) +
-*       theme_bw() +
-*       labs(x = "Principal Component 1",
-*            y = "Principal Component 2",
-*            title = "First two principal components of PCA")))
-```
-]
- 
-.right-output-pca-5-auto[
+res.pca$eig
 
+library(factoextra)
+fviz_screeplot(res.pca)
 ```
-# A tibble: 1 x 4
-  data                 pca      pca_aug              pca_graph
-  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;               &lt;list&gt;   
-1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt; &lt;gg&gt;     
-```
-]
 
----
-class: split-40
-count: false
- 
-Visualise PCA results
-.left-code-pca-5-auto[
 
 ```r
-library(ggfortify)  
-j_data5_pca %&gt;%  
-  mutate(  
-    pca_graph = map2(.x = pca, .y = data,  
-      ~ autoplot(.x,  
-                 loadings = TRUE,  
-                 loadings.label = TRUE,  
-                 loadings.label.repel = TRUE,  
-                 data = .y,  
-                 label = TRUE,  
-                 label.label = "Spit",  
-                 label.repel = TRUE) +  
-        theme_bw() +  
-        labs(x = "Principal Component 1",  
-             y = "Principal Component 2",  
-             title = "First two principal components of PCA"))) %&gt;%  
-* pull(pca_graph)
-```
-]
- 
-.right-output-pca-5-auto[
-
-```
-[[1]]
+# create biplot
+fviz_pca_biplot(res.pca)
 ```
 
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-5_auto_4_output-1.png" width="432" /&gt;
-]
-
+<div class="countdown" id="timer_5edbfb02" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
 ---
-class: split-40
-count: false
- 
-Visualise PCA results
-.left-code-pca-5-auto[
 
-```r
-library(ggfortify)  
-j_data5_pca %&gt;%  
-  mutate(  
-    pca_graph = map2(.x = pca, .y = data,  
-      ~ autoplot(.x,  
-                 loadings = TRUE,  
-                 loadings.label = TRUE,  
-                 loadings.label.repel = TRUE,  
-                 data = .y,  
-                 label = TRUE,  
-                 label.label = "Spit",  
-                 label.repel = TRUE) +  
-        theme_bw() +  
-        labs(x = "Principal Component 1",  
-             y = "Principal Component 2",  
-             title = "First two principal components of PCA"))) %&gt;%  
-  pull(pca_graph)  
-```
-]
- 
-.right-output-pca-5-auto[
-
-```
-[[1]]
-```
-
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-5_auto_5_output-1.png" width="432" /&gt;
-]
-
-&lt;style&gt;
-.left-code-pca-5-auto {
-  color: #777;
-  width: 70%;
-  height: 92%;
-  float: left;
-  font-size: 80%
-}
-.right-output-pca-5-auto {
-  width: 28%;
-  float: right;
-  padding-left: 1%;
-}
-&lt;/style&gt;
-
-
-
----
 
 class: left, bottom
 
@@ -5525,6 +5190,57 @@ fviz_cluster(kmeans_output,
 
 background-image: url(https://images.unsplash.com/photo-1543175451-3d57d601828c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80)
 background-size: cover
+
+---
+
+# Your turn: k-means
+
+
+```r
+j_data4 &lt;-  j_data %&gt;% 
+  filter(Material %in% c("Silcrete")) %&gt;% 
+  select(Length, 
+         Thick,
+         Width) %&gt;% 
+  drop_na() 
+```
+
+
+```r
+# find an appropriate number of clusters to use.
+library(factoextra)
+
+fviz_nbclust(j_data4, 
+             kmeans, 
+             method = "wss") +
+  geom_vline(xintercept = 4)
+```
+
+
+```r
+# compute clusters
+kmeans_output &lt;- kmeans(j_data4, 
+                        centers = 4, 
+                        nstart = 50)
+```
+
+
+```r
+# visualise the clusters 
+# in our data
+j_data4 %&gt;%
+  mutate(cluster = kmeans_output$cluster) %&gt;%
+  ggplot(aes(Length, 
+             Thick, 
+             color = factor(cluster), 
+             label = cluster)) +
+  geom_text() +
+  theme_minimal()
+```
+
+<div class="countdown" id="timer_5edbfacb" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
 
 ---
 

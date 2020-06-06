@@ -682,6 +682,15 @@ aov(Length ~ Material,
 
 ---
 
+class: left, bottom
+
+background-image: url(https://images.unsplash.com/photo-1505778276668-26b3ff7af103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1643&q=80)
+background-size: contain
+
+# Exploring the data with PCA and k-means
+
+---
+
 # Let's do a Principal Components Analysis to reduce our multivariate data into smaller set of variables to observe trends, clusters and outliers
 
 ---
@@ -747,13 +756,24 @@ background-size: contain
 ---
 
 ```{r, pca-1, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
+library(tidyverse)
 
-# prepare data
+# get the data
+nb_data <- rio::import("https://bit.ly/37is3Dj")
 
-j_data %>% 
-  filter(Square == "B") %>% 
-  select(Spit, Length, Thick, Width)  %>% 
-  drop_na
+# prepare the data
+nb_data %>%
+  mutate(chipFreq = Chips/Artifacts,
+         coreFreq = Cores/Artifacts,
+         blankFreq = Blanks/Artifacts,
+         retFreq  = RetouchedTools/Artifacts,
+         featFreq = Features/SampledVolume,
+         toolDiv = ToolTypes/sqrt(RetouchedTools),
+         lithDens = Artifacts/SampledVolume
+  ) %>%
+  select(chipFreq, coreFreq, blankFreq, 
+         retFreq, featFreq, toolDiv, 
+         lithDens, EstimatedArea)
 ```
 
 `r chunk_reveal("pca-1", break_type = "auto", title = "Prepare data for PCA", width_code = "60%", width_output = "38%")`
@@ -761,28 +781,34 @@ j_data %>%
 ---
 
 ```{r, pca-1a, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
+library(rio)
 
-j_data5 <- j_data %>% 
-  filter(Square == "B") %>% 
-  select(Spit, Length, Thick, Width)  %>% 
-  drop_na
+# get the data
+nb_data <- import("https://bit.ly/37is3Dj")
+
+# prepare the data
+working_data <- nb_data %>%
+  mutate(chipFreq = Chips/Artifacts,
+         coreFreq = Cores/Artifacts,
+         blankFreq = Blanks/Artifacts,
+         retFreq  = RetouchedTools/Artifacts,
+         featFreq = Features/SampledVolume,
+         toolDiv = ToolTypes/sqrt(RetouchedTools),
+         lithDens = Artifacts/SampledVolume) %>%
+  select(chipFreq, coreFreq, blankFreq, 
+         retFreq, featFreq, toolDiv, 
+         lithDens, EstimatedArea)
 
 ```
 
 ```{r, pca-2, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-library(broom)
+
+library(FactoMineR)
+row.names(working_data) <- nb_data$Sites
 
 # compute PCA
-  j_data5 %>% 
-  nest(data=everything()) %>% 
-  mutate(pca = map(data, 
-                   ~prcomp(.x %>% 
-                             select(-Spit), 
-                           center = TRUE, 
-                           scale = TRUE)),
-         pca_aug = map2(pca,data, 
-                        ~augment(.x, 
-                                 data = .y)))
+PCA(working_data, 
+    graph = FALSE)
 
 ```
 
@@ -792,30 +818,26 @@ library(broom)
 
 ```{r, pca-2a, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
 
-j_data5_pca <-  j_data5 %>% 
-  nest(data=everything()) %>% 
-  mutate(pca = map(data, 
-                   ~prcomp(.x %>% select(-Spit), 
-                                  center = TRUE, 
-                                  scale = TRUE)),
-         pca_aug = map2(pca,data, 
-                        ~augment(.x, 
-                                 data = .y)))
+library(FactoMineR)
+row.names(working_data) <- nb_data$Sites
+
+# compute PCA
+res.pca <- PCA(working_data, 
+               graph = FALSE)
 
 ```
 
 ```{r, pca-3, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-# how much variance is 
-# explained by the PCs
-  j_data5_pca %>% 
-  unnest(pca_aug) %>% 
-  summarize_at(vars(contains("PC", 
-                             ignore.case = FALSE)), 
-               funs(var)) %>% 
-  gather(key = pc, value = variance) %>% 
-  mutate(var_exp = variance / sum(variance),
-         cum_var_exp = cumsum(var_exp),
-         pc = str_replace(pc, ".fitted", ""))
+
+# inspect eigenvalues, values >1 
+# indicate that component captures more
+# variability that any of 
+# the original measurement variables
+res.pca$eig
+
+# inspect distribution of PCs
+library(factoextra)
+fviz_screeplot(res.pca)
 
 ```
 
@@ -823,70 +845,47 @@ j_data5_pca <-  j_data5 %>%
 
 ---
 
-```{r, pca-3a, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
+```{r, pca-3a, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 
-var_exp <-   j_data5_pca %>% 
-  unnest(pca_aug) %>% 
-  summarize_at(vars(contains("PC", 
-                             ignore.case = FALSE)), 
-               funs(var)) %>% 
-  gather(key = pc, value = variance) %>% 
-  mutate(var_exp = variance / sum(variance),
-         cum_var_exp = cumsum(var_exp),
-         pc = str_replace(pc, ".fitted", ""))
+res.pca$eig
+
+library(factoextra)
+fviz_screeplot(res.pca)
 
 ```
 
 ```{r, pca-4, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-var_exp %>% 
-  rename(
-    `Variance Explained` = var_exp,
-    `Cumulative Variance Explained` = cum_var_exp
-  ) %>% 
-  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,
-                names_to = "key", 
-               values_to = "value") %>% 
-  ggplot(aes(pc, 
-             value, 
-             group = key)) + 
-  geom_point() + 
-  geom_line() + 
-  facet_wrap(~key, scales = "free_y") +
-  theme_bw(base_size = 20) +
-  lims(y = c(0, 1)) +
-  labs(y = "Variance",
-       title = "Variance explained by each principal component")
-```
 
-`r chunk_reveal("pca-4", break_type = "auto", title = "Inspect PCA variance explained", width_code = "70%", width_output = "28%")`
-
----
-
-```{r, pca-5, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-
-library(ggfortify)
-j_data5_pca %>%
-  mutate(
-    pca_graph = map2(.x = pca, .y = data,
-      ~ autoplot(.x, 
-                 loadings = TRUE, 
-                 loadings.label = TRUE,
-                 loadings.label.repel = TRUE,
-                 data = .y, 
-                 label = TRUE,
-                 label.label = "Spit",
-                 label.repel = TRUE) +
-        theme_bw() +
-        labs(x = "Principal Component 1",
-             y = "Principal Component 2",
-             title = "First two principal components of PCA"))) %>%
-  pull(pca_graph)
+# create biplot
+fviz_pca_biplot(res.pca)
 
 ```
 
-`r chunk_reveal("pca-5", break_type = "auto", title = "Visualise PCA results", width_code = "70%", width_output = "28%")`
+`r chunk_reveal("pca-4", break_type = "auto", title = "Visualise PCA results", width_code = "45%", width_output = "50%")`
 
 ---
+
+# Your turn: PCA
+
+```{r, code = knitr::knit_code$get("pca-1a"), eval = FALSE, echo = TRUE}
+```
+
+```{r, code = knitr::knit_code$get("pca-2a"), eval = FALSE, echo = TRUE}
+```
+
+`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+
+---
+
+```{r, code = knitr::knit_code$get("pca-3a"), eval = FALSE, echo = TRUE}
+```
+
+```{r, code = knitr::knit_code$get("pca-4"), eval = FALSE, echo = TRUE}
+```
+
+`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+---
+
 
 class: left, bottom
 
@@ -1090,6 +1089,24 @@ fviz_cluster(kmeans_output,
 
 background-image: url(https://images.unsplash.com/photo-1543175451-3d57d601828c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80)
 background-size: cover
+
+---
+
+# Your turn: k-means
+
+```{r, code = knitr::knit_code$get("k-1a"), eval = FALSE, echo = TRUE}
+```
+
+```{r, code = knitr::knit_code$get("k-2"), eval = FALSE, echo = TRUE}
+```
+
+```{r, code = knitr::knit_code$get("k-3a"), eval = FALSE, echo = TRUE}
+```
+
+```{r, code = knitr::knit_code$get("k-4"), eval = FALSE, echo = TRUE}
+```
+
+`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
 
 ---
 

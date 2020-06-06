@@ -422,6 +422,51 @@ j_data5_pca %>%
 
 
 # ------------ simpler PCA
+library(tidyverse)
+
+# get the data
+nb_data <- rio::import("https://bit.ly/37is3Dj")
+
+# prepare the data
+
+working_data <- nb_data %>%
+  mutate(chipFreq = Chips/Artifacts,
+         coreFreq = Cores/Artifacts,
+         blankFreq = Blanks/Artifacts,
+         retFreq  = RetouchedTools/Artifacts,
+         featFreq = Features/SampledVolume,
+         toolDiv = ToolTypes/sqrt(RetouchedTools),
+         lithDens = Artifacts/SampledVolume
+  ) %>%
+  select(chipFreq, 
+         coreFreq, 
+         blankFreq, 
+         retFreq, 
+         featFreq, 
+         toolDiv, 
+         lithDens, 
+         EstimatedArea)
+
+
+row.names(working_data) <- nb_data$Sites
+
+library(FactoMineR)
+# compute PCA
+res.pca <- PCA(working_data, 
+               graph = FALSE)
+
+# inspect eigenvalues, values >1 indicate that component captures more
+# variability that any of the original measurement variables
+res.pca$eig
+
+# inspect distribution of PCs
+library(factoextra)
+fviz_screeplot(res.pca)
+
+# Visualise output from the PCA ------------------------------------------
+
+# create biplot
+fviz_pca_biplot(res.pca)
 
 
 
