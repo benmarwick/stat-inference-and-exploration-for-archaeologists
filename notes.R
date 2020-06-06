@@ -447,6 +447,15 @@ working_data <- nb_data %>%
          lithDens, 
          EstimatedArea)
 
+write_csv(working_data, here::here("data/cascalheira-bicho-2020-data-prepped.csv"))
+
+#-------------------------------------------
+
+
+
+# get the prepped data
+nb_data <- rio::import("https://bit.ly/2XFcOB5")
+
 
 row.names(working_data) <- nb_data$Sites
 
