@@ -1,0 +1,5667 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical Inference and Data Exploration for Archaeologists</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ben Marwick, June 2020" />
+    <link href="stat-inference-and-exploration-for-archaeologists_files/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="stat-inference-and-exploration-for-archaeologists_files/countdown-0.3.5/countdown.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical Inference and Data Exploration for Archaeologists
+## A Guide to using R for Beginners
+### Ben Marwick, June 2020
+
+---
+
+
+
+
+class:  center, left
+
+.pull-left[
+&lt;img class="mask" /&gt;
+]
+
+
+.pull-right[
+# Find me at...
+.left[
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/&gt;&lt;/svg&gt; @benmarwick](http://twitter.com/benmarwick)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 496 512"&gt;&lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/&gt;&lt;/svg&gt; @benmarwick](http://github.com/benmarwick)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/&gt;&lt;/svg&gt; faculty.washington.edu/bmarwick](http://faculty.washington.edu/bmarwick)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/&gt;&lt;/svg&gt; bmarwick@uw.edu](mailto:bmarwick@uw.edu)
+]
+]
+
+---
+
+# Welcome
+
+- Statistical inference is the process of making conclusions from a sample of data
+
+--
+
+- One kind of statistical inference is hypothesis testing, where we use a sample of data to determine the strength of evidence for or against our theory
+
+--
+
+- Data exploration is searching for patterns, groups and characteristics in our sample
+
+--
+
+- We are going to do statistical inference and data exploration using the tidyverse (to catch up, see [tidyverse for archaeologists](https://github.com/benmarwick/tidyverse-for-archaeology))
+
+--
+
+- When we write R code to analyse archaeological data, our analysis is **transparent and reproducible**. These are two vital characteristics of good scientific work. 
+
+--
+
+- We should **share our code and data** with our research publications for others to study and learn
+
+---
+
+# What are we going to do today?
+
+I will demonstrate and you will practice...
+
+--
+
+- Hypothesis testing: chi-square, t-test, ANOVA
+
+--
+
+- Principal Components Analysis  
+
+--
+
+- k-means clustering   
+
+---
+
+class: center, middle 
+
+# Let's import some archaeological data 💽
+
+---
+
+class: left, middle
+
+background-image: url(figures/data-source-paper.png)
+background-size: contain
+
+---
+
+
+
+class: split-40
+count: false
+ 
+
+.left-code-import-auto[
+
+```r
+*library(rio)
+```
+]
+ 
+.right-output-import-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-import-auto[
+
+```r
+library(rio)  
+
+# read in the data
+*j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df")
+```
+]
+ 
+.right-output-import-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-import-auto[
+
+```r
+library(rio)  
+
+# read in the data
+j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df")  
+
+# take a look
+*j_data
+```
+]
+ 
+.right-output-import-auto[
+
+```
+# A tibble: 9,752 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
+ 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
+ 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
+ 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
+ 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
+ 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
+ 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
+ 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
+ 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
+10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
+# … with 9,742 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+&lt;style&gt;
+.left-code-import-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-import-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: left, middle
+
+background-image: url(https://images.unsplash.com/photo-1515490480959-ce9152f7ea2b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2850&amp;q=80)
+background-size: cover
+
+---
+
+# Your turn
+
+
+```r
+library(rio) 
+
+# read in the data
+j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df") 
+
+# take a look
+j_data
+```
+
+<div class="countdown" id="timer_5edb6617" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+
+class: center, middle 
+
+# Let's do some hypothesis testing 🧪 We will use the `infer` package and the [Modern Dive](https://moderndive.com/) book
+
+---
+
+# This really is only one test
+
+[![Only One Test](figures/downey.png)](http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html)
+
+---
+
+# Here are the basic steps 👣
+
+[![](figures/infer-diagram.png)](https://infer.netlify.app/)
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.073.jpeg)
+background-size: contain
+
+Start with our data
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.074.jpeg)
+background-size: contain
+
+Specify the variables in our data frame that we want to investigate
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.075.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.076.jpeg)
+background-size: contain
+
+Declare the null hypothesis, the observed effect was simply due to random chance
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.077.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.078.jpeg)
+background-size: contain
+
+Generate many datasets according to the null hypothesis
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.079.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.081.jpeg)
+background-size: contain
+
+Calculate the distribution of the statistic from the generated datasets to create the null distribution.
+
+---
+
+class: left, bottom
+
+background-image: url(figures/infer.082.jpeg)
+background-size: contain
+
+Visualize the statistic relative to the null distribution of our generated data
+
+---
+
+# Let's do a chi-square test for the independence of raw material type and artefact type of our stone artefacts. Is the association between artefact type and raw material type random or independent? 
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+*j_data1 &lt;- j_data
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+* filter(Material %in% c("Volcanic", "Quartzite"))
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+* filter(Artclas %in% c("Flake", "Hshat", "FFrag"))
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
+
+# plot the data
+*ggplot(j_data1)
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
+
+# plot the data
+ggplot(j_data1) +  
+*      aes(Material,
+*          fill = Artclas)
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
+
+# plot the data
+ggplot(j_data1) +  
+       aes(Material,  
+           fill = Artclas) +  
+* geom_bar()
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
+
+# plot the data
+ggplot(j_data1) +  
+       aes(Material,  
+           fill = Artclas) +  
+  geom_bar() +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a chi-square test: Is flake type independant from raw material type?
+.left-code-test-chi-square-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+j_data1 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
+
+# plot the data
+ggplot(j_data1) +  
+       aes(Material,  
+           fill = Artclas) +  
+  geom_bar() +  
+  theme_bw(base_size = 20)  
+```
+]
+ 
+.right-output-test-chi-square-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_9_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-test-chi-square-1-auto {
+  color: #777;
+  width: 70%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-test-chi-square-1-auto {
+  width: 25%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+*library(infer)
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+*j_data1
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
+# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+* specify(Material ~ Artclas)
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+Response: Material (factor)
+Explanatory: Artclas (factor)
+# A tibble: 297 x 2
+   Material Artclas
+   &lt;fct&gt;    &lt;fct&gt;  
+ 1 Volcanic Flake  
+ 2 Volcanic Flake  
+ 3 Volcanic Hshat  
+ 4 Volcanic Hshat  
+ 5 Volcanic Hshat  
+ 6 Volcanic Hshat  
+ 7 Volcanic Hshat  
+ 8 Volcanic Flake  
+ 9 Volcanic Flake  
+10 Volcanic Flake  
+# … with 287 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+* calculate(stat = "Chisq")
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  2.63
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+* dplyr::pull()
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+  dplyr::pull()  
+
+# generate data and chi-square
+# statistics under the null
+*j_data1
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
+# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+  dplyr::pull()  
+
+# generate data and chi-square
+# statistics under the null
+j_data1 %&gt;%  
+* specify(Material ~ Artclas)
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+
+```
+Response: Material (factor)
+Explanatory: Artclas (factor)
+# A tibble: 297 x 2
+   Material Artclas
+   &lt;fct&gt;    &lt;fct&gt;  
+ 1 Volcanic Flake  
+ 2 Volcanic Flake  
+ 3 Volcanic Hshat  
+ 4 Volcanic Hshat  
+ 5 Volcanic Hshat  
+ 6 Volcanic Hshat  
+ 7 Volcanic Hshat  
+ 8 Volcanic Flake  
+ 9 Volcanic Flake  
+10 Volcanic Flake  
+# … with 287 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+  dplyr::pull()  
+
+# generate data and chi-square
+# statistics under the null
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+* hypothesize(null = "independence")
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+
+```
+Response: Material (factor)
+Explanatory: Artclas (factor)
+Null Hypothesis: independence
+# A tibble: 297 x 2
+   Material Artclas
+   &lt;fct&gt;    &lt;fct&gt;  
+ 1 Volcanic Flake  
+ 2 Volcanic Flake  
+ 3 Volcanic Hshat  
+ 4 Volcanic Hshat  
+ 5 Volcanic Hshat  
+ 6 Volcanic Hshat  
+ 7 Volcanic Hshat  
+ 8 Volcanic Flake  
+ 9 Volcanic Flake  
+10 Volcanic Flake  
+# … with 287 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+  dplyr::pull()  
+
+# generate data and chi-square
+# statistics under the null
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+* generate(reps = 1000,
+*          type = "permute")
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+
+```
+Response: Material (factor)
+Explanatory: Artclas (factor)
+Null Hypothesis: independence
+# A tibble: 297,000 x 3
+# Groups:   replicate [1,000]
+   Material  Artclas replicate
+   &lt;fct&gt;     &lt;fct&gt;       &lt;int&gt;
+ 1 Volcanic  Flake           1
+ 2 Volcanic  Flake           1
+ 3 Volcanic  Hshat           1
+ 4 Volcanic  Hshat           1
+ 5 Quartzite Hshat           1
+ 6 Volcanic  Hshat           1
+ 7 Volcanic  Hshat           1
+ 8 Volcanic  Flake           1
+ 9 Volcanic  Flake           1
+10 Volcanic  Flake           1
+# … with 296,990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-test-chi-square-2-auto[
+
+```r
+library(infer)  
+
+# compute chi-square statistic
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  calculate(stat = "Chisq") %&gt;%  
+  dplyr::pull()  
+
+# generate data and chi-square
+# statistics under the null
+j_data1 %&gt;%  
+  specify(Material ~ Artclas) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+  generate(reps = 1000,  
+           type = "permute") %&gt;%  
+* calculate(stat = "Chisq")
+```
+]
+ 
+.right-output-test-chi-square-2-auto[
+
+```
+X-squared 
+ 2.630641 
+```
+
+```
+# A tibble: 1,000 x 2
+   replicate  stat
+       &lt;int&gt; &lt;dbl&gt;
+ 1         1 2.63 
+ 2         2 0.581
+ 3         3 1.28 
+ 4         4 3.82 
+ 5         5 0.729
+ 6         6 0.729
+ 7         7 0.729
+ 8         8 3.84 
+ 9         9 2.00 
+10        10 1.28 
+# … with 990 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-test-chi-square-2-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-test-chi-square-2-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: left, top
+
+background-image: url(https://images.unsplash.com/photo-1557318041-1ce374d55ebf?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1100&amp;q=80)
+background-size: cover
+
+# How does our actual chi-square value for our data compare to the chi-square values we got from the datasets generated under the null  hypothesis?
+
+---
+
+
+
+
+
+
+
+
+
+class: split-40
+count: false
+ 
+Visualise the chi-square test for our data with the random data
+.left-code-test-chi-square-3-auto[
+
+```r
+# visualise
+*null_distribution
+```
+]
+ 
+.right-output-test-chi-square-3-auto[
+
+```
+# A tibble: 1,000 x 2
+   replicate  stat
+       &lt;int&gt; &lt;dbl&gt;
+ 1         1 6.47 
+ 2         2 2.00 
+ 3         3 0.729
+ 4         4 2.63 
+ 5         5 7.04 
+ 6         6 0.729
+ 7         7 3.84 
+ 8         8 1.28 
+ 9         9 0.729
+10        10 0.971
+# … with 990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the chi-square test for our data with the random data
+.left-code-test-chi-square-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+* visualize()
+```
+]
+ 
+.right-output-test-chi-square-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-3_auto_2_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the chi-square test for our data with the random data
+.left-code-test-chi-square-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+* shade_p_value(obs_stat = chi_square_stat,
+*               direction = "right")
+```
+]
+ 
+.right-output-test-chi-square-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-3_auto_3_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the chi-square test for our data with the random data
+.left-code-test-chi-square-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+  shade_p_value(obs_stat = chi_square_stat,  
+                direction = "right") +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-test-chi-square-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-3_auto_4_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-test-chi-square-3-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-test-chi-square-3-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: right, top
+
+background-image: url(https://images.unsplash.com/photo-1590412732788-d54badbebb53?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1651&amp;q=80)
+background-size: cover
+
+# What does it mean?
+
+---
+
+
+
+class: split-40
+count: false
+ 
+
+.left-code-test-chi-square-4-auto[
+
+```r
+# get the chi-square statistic,
+# degrees of freedom, and p-value
+*j_data1
+```
+]
+ 
+.right-output-test-chi-square-4-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
+# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-test-chi-square-4-auto[
+
+```r
+# get the chi-square statistic,
+# degrees of freedom, and p-value
+j_data1 %&gt;%  
+* chisq_test(Material ~ Artclas)
+```
+]
+ 
+.right-output-test-chi-square-4-auto[
+
+```
+# A tibble: 1 x 3
+  statistic chisq_df p_value
+      &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;
+1      2.63        2   0.268
+```
+]
+
+&lt;style&gt;
+.left-code-test-chi-square-4-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-test-chi-square-4-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+# How to report the results of our chi-square test?
+  
+"A chi-square test of independence showed that there was no association between raw material and artefact type (χ&lt;sup&gt;2&lt;/sup&gt; (df = 2, N = 297) = 2.63, p = 0.28)."
+
+---
+
+# Your turn
+
+
+```r
+# filter the data to focus on our question
+j_data1 &lt;- j_data %&gt;% 
+  filter(Material %in% c("Volcanic", "Quartzite")) %&gt;% 
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag")) 
+```
+
+
+```r
+null_distribution &lt;-  j_data1 %&gt;% 
+  specify(Material ~ Artclas) %&gt;% 
+  hypothesize(null = "independence") %&gt;% 
+  generate(reps = 1000,
+           type = "permute") %&gt;% 
+  calculate(stat = "Chisq")
+```
+
+
+```r
+# visualise 
+null_distribution %&gt;% 
+  visualize() +
+  shade_p_value(obs_stat = chi_square_stat, 
+                direction = "right") +
+  theme_bw(base_size = 20)
+```
+
+<div class="countdown" id="timer_5edb65fe" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Let's do a t-test for the independence of flake length by two types of raw material in our stone artefacts. Are the lengths of Volcanic and Chert flakes equivalent or different? 
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-1.jpeg)
+background-size: contain
+
+---
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-2.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-3.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-4.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-5.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-6.jpeg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-t-test-7.jpeg)
+background-size: contain
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+*library(tidyverse)
+```
+]
+ 
+.right-output-t-test-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+*j_data2 &lt;- j_data
+```
+]
+ 
+.right-output-t-test-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+* filter(Material %in% c("Volcanic", "Chert"))
+```
+]
+ 
+.right-output-t-test-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+* filter(Artclas == "Flake")
+```
+]
+ 
+.right-output-t-test-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+*ggplot(j_data2)
+```
+]
+ 
+.right-output-t-test-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data2) +  
+* aes(x = Length,
+*     colour = Material)
+```
+]
+ 
+.right-output-t-test-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data2) +  
+  aes(x = Length,  
+      colour = Material) +  
+* geom_density()
+```
+]
+ 
+.right-output-t-test-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data2) +  
+  aes(x = Length,  
+      colour = Material) +  
+  geom_density() +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-t-test-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare our data for a t-test: Is flake length independant from raw material type?
+.left-code-t-test-1-auto[
+
+```r
+library(tidyverse)  
+
+# filter the data to
+# focus on our question
+# prepare data
+j_data2 &lt;- j_data %&gt;%  
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data2) +  
+  aes(x = Length,  
+      colour = Material) +  
+  geom_density() +  
+  theme_bw(base_size = 20)  
+```
+]
+ 
+.right-output-t-test-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_9_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-t-test-1-auto {
+  color: #777;
+  width: 60%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-t-test-1-auto {
+  width: 35%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+*library(infer)
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+*j_data2
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 4,697 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
+# … with 4,687 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+* specify(Length ~ Material)
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+# A tibble: 4,697 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,687 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+* calculate(stat = "t",
+*           order = c("Volcanic", "Chert"))
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "t",  
+            order = c("Volcanic", "Chert"))  
+
+# generate data and t-test
+# statistics under the null
+*j_data2
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+
+```
+# A tibble: 4,697 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
+# … with 4,687 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "t",  
+            order = c("Volcanic", "Chert"))  
+
+# generate data and t-test
+# statistics under the null
+j_data2 %&gt;%  
+* specify(Length ~ Material)
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+# A tibble: 4,697 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,687 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "t",  
+            order = c("Volcanic", "Chert"))  
+
+# generate data and t-test
+# statistics under the null
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+* hypothesize(null = "independence")
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+Null Hypothesis: independence
+# A tibble: 4,697 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,687 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "t",  
+            order = c("Volcanic", "Chert"))  
+
+# generate data and t-test
+# statistics under the null
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+* generate(reps = 1000,
+*          type = "permute")
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+Null Hypothesis: independence
+# A tibble: 4,697,000 x 3
+# Groups:   replicate [1,000]
+   Length Material replicate
+    &lt;dbl&gt; &lt;fct&gt;        &lt;int&gt;
+ 1   9.36 Chert            1
+ 2   7.14 Chert            1
+ 3  22.1  Chert            1
+ 4   5.22 Chert            1
+ 5  21.1  Chert            1
+ 6   6.08 Chert            1
+ 7  10.7  Chert            1
+ 8  10.7  Chert            1
+ 9   3.88 Chert            1
+10  11.6  Chert            1
+# … with 4,696,990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-t-test-2b-auto[
+
+```r
+library(infer)  
+
+# compute t-test statistic
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "t",  
+            order = c("Volcanic", "Chert"))  
+
+# generate data and t-test
+# statistics under the null
+j_data2 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+  generate(reps = 1000,  
+           type = "permute") %&gt;%  
+* calculate(stat = "t",
+*           order = c("Volcanic", "Chert"))
+```
+]
+ 
+.right-output-t-test-2b-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  6.72
+```
+
+```
+# A tibble: 1,000 x 2
+   replicate   stat
+       &lt;int&gt;  &lt;dbl&gt;
+ 1         1 -0.436
+ 2         2 -1.08 
+ 3         3  1.47 
+ 4         4 -0.744
+ 5         5  0.309
+ 6         6  1.37 
+ 7         7  0.258
+ 8         8 -2.28 
+ 9         9 -2.04 
+10        10  0.766
+# … with 990 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-t-test-2b-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-t-test-2b-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+
+
+class: split-40
+count: false
+ 
+Visualise the t-test for our data with the random data
+.left-code-t-test-3-auto[
+
+```r
+# visualise
+*null_distribution
+```
+]
+ 
+.right-output-t-test-3-auto[
+
+```
+# A tibble: 1,000 x 2
+   replicate   stat
+       &lt;int&gt;  &lt;dbl&gt;
+ 1         1  1.18 
+ 2         2  0.232
+ 3         3  0.790
+ 4         4 -0.966
+ 5         5 -1.12 
+ 6         6 -0.429
+ 7         7 -0.125
+ 8         8  1.95 
+ 9         9 -0.105
+10        10  0.299
+# … with 990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the t-test for our data with the random data
+.left-code-t-test-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+* visualize()
+```
+]
+ 
+.right-output-t-test-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-3_auto_2_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the t-test for our data with the random data
+.left-code-t-test-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+* shade_p_value(obs_stat = t_stat,
+*               direction = "right")
+```
+]
+ 
+.right-output-t-test-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-3_auto_3_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the t-test for our data with the random data
+.left-code-t-test-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+  shade_p_value(obs_stat = t_stat,  
+                direction = "right") +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-t-test-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-3_auto_4_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-t-test-3-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-t-test-3-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: right, top
+
+background-image: url(https://images.unsplash.com/photo-1590034081344-88d957c6282b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80)
+background-size: cover
+
+# What does it mean?
+
+---
+
+
+
+class: split-40
+count: false
+ 
+
+.left-code-t-test-4-auto[
+
+```r
+# get the t-test statistic,
+# degrees of freedom, and p-value
+*j_data1
+```
+]
+ 
+.right-output-t-test-4-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
+# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-t-test-4-auto[
+
+```r
+# get the t-test statistic,
+# degrees of freedom, and p-value
+j_data1 %&gt;%  
+* t_test(Length ~ Material,
+*        order = c("Volcanic",
+*                  "Quartzite"))
+```
+]
+ 
+.right-output-t-test-4-auto[
+
+```
+# A tibble: 1 x 6
+  statistic  t_df p_value alternative lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1     0.629  36.4   0.533 two.sided      -2.60     4.95
+```
+]
+
+&lt;style&gt;
+.left-code-t-test-4-auto {
+  color: #777;
+  width: 50%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-t-test-4-auto {
+  width: 45%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+# How to report the results of our t-test?
+  
+"There was no association between raw material and artefact type for Volcanic and Quartzite artefacts (t(36) = 0.62, p = 0.53)."
+
+---
+
+# Your turn
+
+
+```r
+# filter the data to focus on our question
+j_data2 &lt;- j_data %&gt;% 
+  filter(Material %in% c("Volcanic", "Chert")) %&gt;% 
+  filter(Artclas == "Flake") 
+```
+
+
+```r
+null_distribution &lt;-  j_data2 %&gt;%
+  specify(Length ~ Material) %&gt;%
+  hypothesize(null = "independence") %&gt;%
+  generate(reps = 1000, type = "permute") %&gt;%
+  calculate(stat = "t", order = c("Volcanic", "Chert"))
+```
+
+
+```r
+# visualise 
+null_distribution %&gt;% 
+  visualize() +
+  shade_p_value(obs_stat = t_stat, 
+                direction = "right") +
+  theme_bw(base_size = 20)  
+```
+
+<div class="countdown" id="timer_5edb693e" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Let's do an ANOVA for the independence of flake length by _all_ types of raw material in our stone artefacts. Are the lengths of flakes equivalent or different for _all_ categories of raw material? 
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+*j_data3 &lt;- j_data
+```
+]
+ 
+.right-output-anova-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+* filter(Artclas == "Flake")
+```
+]
+ 
+.right-output-anova-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+*ggplot(j_data3)
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_3_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data3) +  
+*      aes(reorder(Material,
+*                  Length),
+*          Length)
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_4_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data3) +  
+       aes(reorder(Material,  
+                   Length),  
+           Length) +  
+* geom_boxplot()
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data3) +  
+       aes(reorder(Material,  
+                   Length),  
+           Length) +  
+  geom_boxplot() +  
+* coord_flip()
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data3) +  
+       aes(reorder(Material,  
+                   Length),  
+           Length) +  
+  geom_boxplot() +  
+  coord_flip() +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-anova-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+j_data3 &lt;- j_data %&gt;%  
+  filter(Artclas == "Flake")  
+
+# plot the data
+ggplot(j_data3) +  
+       aes(reorder(Material,  
+                   Length),  
+           Length) +  
+  geom_boxplot() +  
+  coord_flip() +  
+  theme_bw(base_size = 20)  
+```
+]
+ 
+.right-output-anova-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-1_auto_8_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-anova-1-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-anova-1-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+*library(infer)
+```
+]
+ 
+.right-output-anova-2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+*j_data3
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 4,826 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
+# … with 4,816 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+* specify(Length ~ Material)
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+# A tibble: 4,826 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,816 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+* calculate(stat = "F")
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "F")  
+
+# generate data and t-test
+# statistics under the null
+*j_data3
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+
+```
+# A tibble: 4,826 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
+# … with 4,816 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "F")  
+
+# generate data and t-test
+# statistics under the null
+j_data3 %&gt;%  
+* specify(Length ~ Material)
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+# A tibble: 4,826 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,816 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "F")  
+
+# generate data and t-test
+# statistics under the null
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+* hypothesize(null = "independence")
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+Null Hypothesis: independence
+# A tibble: 4,826 x 2
+   Length Material
+    &lt;dbl&gt; &lt;fct&gt;   
+ 1  22.0  Chert   
+ 2   7.07 Chert   
+ 3   5.72 Chert   
+ 4  14.3  Chert   
+ 5  11.2  Chert   
+ 6   3.58 Chert   
+ 7   4.79 Chert   
+ 8   3.29 Chert   
+ 9   6.02 Chert   
+10   3.51 Chert   
+# … with 4,816 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "F")  
+
+# generate data and t-test
+# statistics under the null
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+* generate(reps = 1000,
+*          type = "permute")
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+
+```
+Response: Length (numeric)
+Explanatory: Material (factor)
+Null Hypothesis: independence
+# A tibble: 4,826,000 x 3
+# Groups:   replicate [1,000]
+   Length Material replicate
+    &lt;dbl&gt; &lt;fct&gt;        &lt;int&gt;
+ 1  13.6  Chert            1
+ 2   4.2  Chert            1
+ 3  12.9  Chert            1
+ 4   6.08 Chert            1
+ 5  13.2  Chert            1
+ 6   8.14 Chert            1
+ 7  22.6  Chert            1
+ 8   5.68 Chert            1
+ 9  17.4  Chert            1
+10  10.9  Chert            1
+# … with 4,825,990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
+.left-code-anova-2-auto[
+
+```r
+library(infer)  
+
+# compute F statistic
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  calculate(stat = "F")  
+
+# generate data and t-test
+# statistics under the null
+j_data3 %&gt;%  
+  specify(Length ~ Material) %&gt;%  
+  hypothesize(null = "independence") %&gt;%  
+  generate(reps = 1000,  
+           type = "permute") %&gt;%  
+* calculate(stat = "F")
+```
+]
+ 
+.right-output-anova-2-auto[
+
+```
+# A tibble: 1 x 1
+   stat
+  &lt;dbl&gt;
+1  15.1
+```
+
+```
+# A tibble: 1,000 x 2
+   replicate  stat
+       &lt;int&gt; &lt;dbl&gt;
+ 1         1 1.68 
+ 2         2 1.24 
+ 3         3 0.366
+ 4         4 0.939
+ 5         5 0.485
+ 6         6 0.876
+ 7         7 0.695
+ 8         8 1.04 
+ 9         9 0.607
+10        10 1.40 
+# … with 990 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-anova-2-auto {
+  color: #777;
+  width: 65%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-anova-2-auto {
+  width: 34%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+
+
+class: split-40
+count: false
+ 
+Visualise the ANOVA for our data with the random data
+.left-code-anova-3-auto[
+
+```r
+# visualise
+*null_distribution
+```
+]
+ 
+.right-output-anova-3-auto[
+
+```
+# A tibble: 1,000 x 2
+   replicate  stat
+       &lt;int&gt; &lt;dbl&gt;
+ 1         1 1.92 
+ 2         2 0.568
+ 3         3 0.717
+ 4         4 0.753
+ 5         5 1.05 
+ 6         6 1.23 
+ 7         7 0.560
+ 8         8 1.12 
+ 9         9 0.404
+10        10 1.18 
+# … with 990 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA for our data with the random data
+.left-code-anova-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+* visualize()
+```
+]
+ 
+.right-output-anova-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-3_auto_2_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA for our data with the random data
+.left-code-anova-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+* shade_p_value(obs_stat = F_stat,
+*               direction = "right")
+```
+]
+ 
+.right-output-anova-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-3_auto_3_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA for our data with the random data
+.left-code-anova-3-auto[
+
+```r
+# visualise
+null_distribution %&gt;%  
+  visualize() +  
+  shade_p_value(obs_stat = F_stat,  
+                direction = "right") +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-anova-3-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-3_auto_4_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-anova-3-auto {
+  color: #777;
+  width: 55%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-anova-3-auto {
+  width: 40%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+*aov(Length ~ Material,
+*   data = j_data3)
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+Call:
+   aov(formula = Length ~ Material, data = j_data3)
+
+Terms:
+                 Material Residuals
+Sum of Squares    5640.79 180269.35
+Deg. of Freedom        10      4815
+
+Residual standard error: 6.118751
+Estimated effects may be unbalanced
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+* broom::tidy()
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  broom::tidy()  
+
+# inspect specific difference
+# between categories
+*aov(Length ~ Material,
+*   data = j_data3)
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+
+```
+Call:
+   aov(formula = Length ~ Material, data = j_data3)
+
+Terms:
+                 Material Residuals
+Sum of Squares    5640.79 180269.35
+Deg. of Freedom        10      4815
+
+Residual standard error: 6.118751
+Estimated effects may be unbalanced
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  broom::tidy()  
+
+# inspect specific difference
+# between categories
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+*   TukeyHSD()
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+
+```
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Length ~ Material, data = j_data3)
+
+$Material
+                            diff         lwr         upr     p adj
+Chert-Brecchert       -1.9466973 -21.6525949 17.75920033 0.9999999
+Cortical-Brecchert    -1.1133333 -23.8651968 21.63853014 1.0000000
+Dehydchert-Brecchert   0.5100000 -27.3552281 28.37522810 1.0000000
+FGS-Brecchert          9.0500000 -18.8152281 36.91522810 0.9939875
+Obsidian-Brecchert     0.6654545 -19.9143803 21.24528939 1.0000000
+Quartz-Brecchert      -0.8588235 -21.1337551 19.41610802 1.0000000
+Quartzite-Brecchert    3.0370000 -16.9923947 23.06639467 0.9999934
+Silcrete-Brecchert    -1.4965217 -21.4132326 18.42018909 1.0000000
+Unknown-Brecchert      4.4631579 -15.7524033 24.67871909 0.9997802
+Volcanic-Brecchert     2.3448918 -17.4014026 22.09118615 0.9999994
+Cortical-Chert         0.8333639 -10.5463880 12.21311588 1.0000000
+Dehydchert-Chert       2.4566973 -17.2492003 22.16259486 0.9999990
+FGS-Chert             10.9966973  -8.7092003 30.70259486 0.7822430
+Obsidian-Chert         2.6121518  -3.3360466  8.56035027 0.9451831
+Quartz-Chert           1.0878737  -3.7000602  5.87580773 0.9997153
+Quartzite-Chert        4.9836973   1.3742494  8.59314510 0.0004617
+Silcrete-Chert         0.4501755  -2.4698986  3.37024965 0.9999922
+Unknown-Chert          6.4098552   1.8799129 10.93979745 0.0002781
+Volcanic-Chert         4.2915890   2.9620762  5.62110188 0.0000000
+Dehydchert-Cortical    1.6233333 -21.1285301 24.37519681 1.0000000
+FGS-Cortical          10.1633333 -12.5885301 32.91519681 0.9387607
+Obsidian-Cortical      1.7787879 -11.0549940 14.61256972 0.9999972
+Quartz-Cortical        0.2545098 -12.0844206 12.59344020 1.0000000
+Quartzite-Cortical     4.1503333  -7.7808445 16.08151119 0.9896880
+Silcrete-Cortical     -0.3831884 -12.1242158 11.35783899 1.0000000
+Unknown-Cortical       5.5764912  -6.6646390 17.81762143 0.9305883
+Volcanic-Cortical      3.4582251  -7.9913380 14.90778824 0.9966652
+FGS-Dehydchert         8.5400000 -19.3252281 36.40522810 0.9962406
+Obsidian-Dehydchert    0.1554545 -20.4243803 20.73528939 1.0000000
+Quartz-Dehydchert     -1.3688235 -21.6437551 18.90610802 1.0000000
+Quartzite-Dehydchert   2.5270000 -17.5023947 22.55639467 0.9999989
+Silcrete-Dehydchert   -2.0065217 -21.9232326 17.91018909 0.9999999
+Unknown-Dehydchert     3.9531579 -16.2624033 24.16871909 0.9999275
+Volcanic-Dehydchert    1.8348918 -17.9114026 21.58118615 0.9999999
+Obsidian-FGS          -8.3845455 -28.9643803 12.19528939 0.9669934
+Quartz-FGS            -9.9088235 -30.1837551 10.36610802 0.8934486
+Quartzite-FGS         -6.0130000 -26.0423947 14.01639467 0.9968285
+Silcrete-FGS         -10.5465217 -30.4632326  9.37018909 0.8332796
+Unknown-FGS           -4.5868421 -24.8024033 15.62871909 0.9997188
+Volcanic-FGS          -6.7051082 -26.4514026 13.04118615 0.9914510
+Quartz-Obsidian       -1.5242781  -9.1486806  6.10012446 0.9999111
+Quartzite-Obsidian     2.3715455  -4.5736195  9.31671038 0.9910695
+Silcrete-Obsidian     -2.1619763  -8.7751476  4.45119504 0.9936637
+Unknown-Obsidian       3.7977033  -3.6673874 11.26279405 0.8659341
+Volcanic-Obsidian      1.6794372  -4.4012541  7.76012852 0.9984250
+Quartzite-Quartz       3.8958235  -2.0856949  9.87734197 0.5792526
+Silcrete-Quartz       -0.6376982  -6.2303078  4.95491138 0.9999996
+Unknown-Quartz         5.3219814  -1.2560750 11.90003784 0.2460217
+Volcanic-Quartz        3.2037153  -1.7478555  8.15528612 0.5892819
+Silcrete-Quartzite    -4.5335217  -9.1574901  0.09044666 0.0604008
+Unknown-Quartzite      1.4261579  -4.3509199  7.20323570 0.9994046
+Volcanic-Quartzite    -0.6921082  -4.5159617  3.13174524 0.9999647
+Unknown-Silcrete       5.9596796   0.5862871 11.33307216 0.0157827
+Volcanic-Silcrete      3.8414135   0.6601285  7.02269856 0.0048717
+Volcanic-Unknown      -2.1182661  -6.8208312  2.58429900 0.9353882
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  broom::tidy()  
+
+# inspect specific difference
+# between categories
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+    TukeyHSD() %&gt;%  
+*   broom::tidy()
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+
+```
+# A tibble: 55 x 6
+   term     comparison           estimate conf.low conf.high adj.p.value
+   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Material Chert-Brecchert        -1.95     -21.7      17.8       1.00 
+ 2 Material Cortical-Brecchert     -1.11     -23.9      21.6       1.00 
+ 3 Material Dehydchert-Brecchert    0.51     -27.4      28.4       1    
+ 4 Material FGS-Brecchert           9.05     -18.8      36.9       0.994
+ 5 Material Obsidian-Brecchert      0.665    -19.9      21.2       1.00 
+ 6 Material Quartz-Brecchert       -0.859    -21.1      19.4       1.00 
+ 7 Material Quartzite-Brecchert     3.04     -17.0      23.1       1.00 
+ 8 Material Silcrete-Brecchert     -1.50     -21.4      18.4       1.00 
+ 9 Material Unknown-Brecchert       4.46     -15.8      24.7       1.00 
+10 Material Volcanic-Brecchert      2.34     -17.4      22.1       1.00 
+# … with 45 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  broom::tidy()  
+
+# inspect specific difference
+# between categories
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+    TukeyHSD() %&gt;%  
+    broom::tidy() %&gt;%  
+*   arrange(adj.p.value)
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+
+```
+# A tibble: 55 x 6
+   term     comparison         estimate conf.low conf.high  adj.p.value
+   &lt;chr&gt;    &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Material Volcanic-Chert         4.29    2.96     5.62   0.0000000243
+ 2 Material Unknown-Chert          6.41    1.88    10.9    0.000278    
+ 3 Material Quartzite-Chert        4.98    1.37     8.59   0.000462    
+ 4 Material Volcanic-Silcrete      3.84    0.660    7.02   0.00487     
+ 5 Material Unknown-Silcrete       5.96    0.586   11.3    0.0158      
+ 6 Material Silcrete-Quartzite    -4.53   -9.16     0.0904 0.0604      
+ 7 Material Unknown-Quartz         5.32   -1.26    11.9    0.246       
+ 8 Material Quartzite-Quartz       3.90   -2.09     9.88   0.579       
+ 9 Material Volcanic-Quartz        3.20   -1.75     8.16   0.589       
+10 Material FGS-Chert             11.0    -8.71    30.7    0.782       
+# … with 45 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect the ANOVA output
+.left-code-anova-4-auto[
+
+```r
+# get the F statistic,
+# degrees of freedom, and p-value
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  broom::tidy()  
+
+# inspect specific difference
+# between categories
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+    TukeyHSD() %&gt;%  
+    broom::tidy() %&gt;%  
+    arrange(adj.p.value) %&gt;%  
+*   select(comparison,
+*          adj.p.value)
+```
+]
+ 
+.right-output-anova-4-auto[
+
+```
+# A tibble: 2 x 6
+  term         df   sumsq meansq statistic   p.value
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Material     10   5641.  564.       15.1  7.66e-27
+2 Residuals  4815 180269.   37.4      NA   NA       
+```
+
+```
+# A tibble: 55 x 2
+   comparison          adj.p.value
+   &lt;chr&gt;                     &lt;dbl&gt;
+ 1 Volcanic-Chert     0.0000000243
+ 2 Unknown-Chert      0.000278    
+ 3 Quartzite-Chert    0.000462    
+ 4 Volcanic-Silcrete  0.00487     
+ 5 Unknown-Silcrete   0.0158      
+ 6 Silcrete-Quartzite 0.0604      
+ 7 Unknown-Quartz     0.246       
+ 8 Quartzite-Quartz   0.579       
+ 9 Volcanic-Quartz    0.589       
+10 FGS-Chert          0.782       
+# … with 45 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-anova-4-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-anova-4-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+*aov(Length ~ Material,
+*   data = j_data3)
+```
+]
+ 
+.right-output-anova-5-auto[
+
+```
+Call:
+   aov(formula = Length ~ Material, data = j_data3)
+
+Terms:
+                 Material Residuals
+Sum of Squares    5640.79 180269.35
+Deg. of Freedom        10      4815
+
+Residual standard error: 6.118751
+Estimated effects may be unbalanced
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+* TukeyHSD()
+```
+]
+ 
+.right-output-anova-5-auto[
+
+```
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Length ~ Material, data = j_data3)
+
+$Material
+                            diff         lwr         upr     p adj
+Chert-Brecchert       -1.9466973 -21.6525949 17.75920033 0.9999999
+Cortical-Brecchert    -1.1133333 -23.8651968 21.63853014 1.0000000
+Dehydchert-Brecchert   0.5100000 -27.3552281 28.37522810 1.0000000
+FGS-Brecchert          9.0500000 -18.8152281 36.91522810 0.9939875
+Obsidian-Brecchert     0.6654545 -19.9143803 21.24528939 1.0000000
+Quartz-Brecchert      -0.8588235 -21.1337551 19.41610802 1.0000000
+Quartzite-Brecchert    3.0370000 -16.9923947 23.06639467 0.9999934
+Silcrete-Brecchert    -1.4965217 -21.4132326 18.42018909 1.0000000
+Unknown-Brecchert      4.4631579 -15.7524033 24.67871909 0.9997802
+Volcanic-Brecchert     2.3448918 -17.4014026 22.09118615 0.9999994
+Cortical-Chert         0.8333639 -10.5463880 12.21311588 1.0000000
+Dehydchert-Chert       2.4566973 -17.2492003 22.16259486 0.9999990
+FGS-Chert             10.9966973  -8.7092003 30.70259486 0.7822430
+Obsidian-Chert         2.6121518  -3.3360466  8.56035027 0.9451831
+Quartz-Chert           1.0878737  -3.7000602  5.87580773 0.9997153
+Quartzite-Chert        4.9836973   1.3742494  8.59314510 0.0004617
+Silcrete-Chert         0.4501755  -2.4698986  3.37024965 0.9999922
+Unknown-Chert          6.4098552   1.8799129 10.93979745 0.0002781
+Volcanic-Chert         4.2915890   2.9620762  5.62110188 0.0000000
+Dehydchert-Cortical    1.6233333 -21.1285301 24.37519681 1.0000000
+FGS-Cortical          10.1633333 -12.5885301 32.91519681 0.9387607
+Obsidian-Cortical      1.7787879 -11.0549940 14.61256972 0.9999972
+Quartz-Cortical        0.2545098 -12.0844206 12.59344020 1.0000000
+Quartzite-Cortical     4.1503333  -7.7808445 16.08151119 0.9896880
+Silcrete-Cortical     -0.3831884 -12.1242158 11.35783899 1.0000000
+Unknown-Cortical       5.5764912  -6.6646390 17.81762143 0.9305883
+Volcanic-Cortical      3.4582251  -7.9913380 14.90778824 0.9966652
+FGS-Dehydchert         8.5400000 -19.3252281 36.40522810 0.9962406
+Obsidian-Dehydchert    0.1554545 -20.4243803 20.73528939 1.0000000
+Quartz-Dehydchert     -1.3688235 -21.6437551 18.90610802 1.0000000
+Quartzite-Dehydchert   2.5270000 -17.5023947 22.55639467 0.9999989
+Silcrete-Dehydchert   -2.0065217 -21.9232326 17.91018909 0.9999999
+Unknown-Dehydchert     3.9531579 -16.2624033 24.16871909 0.9999275
+Volcanic-Dehydchert    1.8348918 -17.9114026 21.58118615 0.9999999
+Obsidian-FGS          -8.3845455 -28.9643803 12.19528939 0.9669934
+Quartz-FGS            -9.9088235 -30.1837551 10.36610802 0.8934486
+Quartzite-FGS         -6.0130000 -26.0423947 14.01639467 0.9968285
+Silcrete-FGS         -10.5465217 -30.4632326  9.37018909 0.8332796
+Unknown-FGS           -4.5868421 -24.8024033 15.62871909 0.9997188
+Volcanic-FGS          -6.7051082 -26.4514026 13.04118615 0.9914510
+Quartz-Obsidian       -1.5242781  -9.1486806  6.10012446 0.9999111
+Quartzite-Obsidian     2.3715455  -4.5736195  9.31671038 0.9910695
+Silcrete-Obsidian     -2.1619763  -8.7751476  4.45119504 0.9936637
+Unknown-Obsidian       3.7977033  -3.6673874 11.26279405 0.8659341
+Volcanic-Obsidian      1.6794372  -4.4012541  7.76012852 0.9984250
+Quartzite-Quartz       3.8958235  -2.0856949  9.87734197 0.5792526
+Silcrete-Quartz       -0.6376982  -6.2303078  4.95491138 0.9999996
+Unknown-Quartz         5.3219814  -1.2560750 11.90003784 0.2460217
+Volcanic-Quartz        3.2037153  -1.7478555  8.15528612 0.5892819
+Silcrete-Quartzite    -4.5335217  -9.1574901  0.09044666 0.0604008
+Unknown-Quartzite      1.4261579  -4.3509199  7.20323570 0.9994046
+Volcanic-Quartzite    -0.6921082  -4.5159617  3.13174524 0.9999647
+Unknown-Silcrete       5.9596796   0.5862871 11.33307216 0.0157827
+Volcanic-Silcrete      3.8414135   0.6601285  7.02269856 0.0048717
+Volcanic-Unknown      -2.1182661  -6.8208312  2.58429900 0.9353882
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+* broom::tidy()
+```
+]
+ 
+.right-output-anova-5-auto[
+
+```
+# A tibble: 55 x 6
+   term     comparison           estimate conf.low conf.high adj.p.value
+   &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Material Chert-Brecchert        -1.95     -21.7      17.8       1.00 
+ 2 Material Cortical-Brecchert     -1.11     -23.9      21.6       1.00 
+ 3 Material Dehydchert-Brecchert    0.51     -27.4      28.4       1    
+ 4 Material FGS-Brecchert           9.05     -18.8      36.9       0.994
+ 5 Material Obsidian-Brecchert      0.665    -19.9      21.2       1.00 
+ 6 Material Quartz-Brecchert       -0.859    -21.1      19.4       1.00 
+ 7 Material Quartzite-Brecchert     3.04     -17.0      23.1       1.00 
+ 8 Material Silcrete-Brecchert     -1.50     -21.4      18.4       1.00 
+ 9 Material Unknown-Brecchert       4.46     -15.8      24.7       1.00 
+10 Material Volcanic-Brecchert      2.34     -17.4      22.1       1.00 
+# … with 45 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+* ggplot(aes(x = fct_reorder(comparison,
+*                            estimate),
+*            y = estimate))
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_4_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+  ggplot(aes(x = fct_reorder(comparison,  
+                             estimate),  
+             y = estimate)) +  
+* geom_pointrange(aes(ymin = conf.low,
+*                     ymax = conf.high,
+*                     color = adj.p.value &lt; 0.05))
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+  ggplot(aes(x = fct_reorder(comparison,  
+                             estimate),  
+             y = estimate)) +  
+  geom_pointrange(aes(ymin = conf.low,  
+                      ymax = conf.high,  
+                      color = adj.p.value &lt; 0.05)) +  
+* geom_hline(yintercept = 0,
+*            linetype = "dashed")
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+  ggplot(aes(x = fct_reorder(comparison,  
+                             estimate),  
+             y = estimate)) +  
+  geom_pointrange(aes(ymin = conf.low,  
+                      ymax = conf.high,  
+                      color = adj.p.value &lt; 0.05)) +  
+  geom_hline(yintercept = 0,  
+             linetype = "dashed") +  
+* coord_flip()
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+  ggplot(aes(x = fct_reorder(comparison,  
+                             estimate),  
+             y = estimate)) +  
+  geom_pointrange(aes(ymin = conf.low,  
+                      ymax = conf.high,  
+                      color = adj.p.value &lt; 0.05)) +  
+  geom_hline(yintercept = 0,  
+             linetype = "dashed") +  
+  coord_flip() +  
+* labs(x = NULL,
+*      colour = "padj &lt; 0.05")
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the ANOVA output
+.left-code-anova-5-auto[
+
+```r
+# plot
+aov(Length ~ Material,  
+    data = j_data3) %&gt;%  
+  TukeyHSD() %&gt;%  
+  broom::tidy() %&gt;%  
+  ggplot(aes(x = fct_reorder(comparison,  
+                             estimate),  
+             y = estimate)) +  
+  geom_pointrange(aes(ymin = conf.low,  
+                      ymax = conf.high,  
+                      color = adj.p.value &lt; 0.05)) +  
+  geom_hline(yintercept = 0,  
+             linetype = "dashed") +  
+  coord_flip() +  
+  labs(x = NULL,  
+       colour = "padj &lt; 0.05") +  
+* theme_bw(base_size = 10)
+```
+]
+ 
+.right-output-anova-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/anova-5_auto_9_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-anova-5-auto {
+  color: #777;
+  width: 60%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-anova-5-auto {
+  width: 38%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+# Let's do a Principal Components Analysis to reduce our multivariate data into smaller set of variables to observe trends, clusters and outliers
+
+---
+
+# Our goal is to find some linear combinations of original variables that captures the maximum variance in the data set. These determine the which combinations of variables contain the highest variability in our data.
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-1.png)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-2.gif)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-3.gif)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-3.gif)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-4.gif)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-5.png)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/pca-animated-1.gif)
+background-size: contain
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+# prepare data
+
+*j_data
+```
+]
+ 
+.right-output-pca-1-auto[
+
+```
+# A tibble: 9,752 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
+ 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
+ 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
+ 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
+ 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
+ 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
+ 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
+ 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
+ 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
+10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
+# … with 9,742 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+# prepare data
+
+j_data %&gt;%  
+* filter(Square == "B")
+```
+]
+ 
+.right-output-pca-1-auto[
+
+```
+# A tibble: 5,302 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
+ 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
+ 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
+ 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
+ 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
+ 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
+ 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
+ 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
+ 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
+10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
+# … with 5,292 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
+#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
+#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
+#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
+#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
+#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
+#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+# prepare data
+
+j_data %&gt;%  
+  filter(Square == "B") %&gt;%  
+* select(Spit, Length, Thick, Width)
+```
+]
+ 
+.right-output-pca-1-auto[
+
+```
+# A tibble: 5,302 x 4
+    Spit Length Thick Width
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     1  22.0   3.34 20.4 
+ 2     1  14.6   2.74 19.1 
+ 3     1  29.6   7.25 11.6 
+ 4     1   5.83  2.05  6.54
+ 5     1   7.07  1.13  6.56
+ 6     1  11.1   4.79 12.7 
+ 7     1   5.72  1.16  4.28
+ 8     1   8.37  1.09  4.98
+ 9     1  10.7   3.91  5.2 
+10     1  14.3   3.13  6.07
+# … with 5,292 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+# prepare data
+
+j_data %&gt;%  
+  filter(Square == "B") %&gt;%  
+  select(Spit, Length, Thick, Width)  %&gt;%  
+* drop_na
+```
+]
+ 
+.right-output-pca-1-auto[
+
+```
+# A tibble: 5,301 x 4
+    Spit Length Thick Width
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     1  22.0   3.34 20.4 
+ 2     1  14.6   2.74 19.1 
+ 3     1  29.6   7.25 11.6 
+ 4     1   5.83  2.05  6.54
+ 5     1   7.07  1.13  6.56
+ 6     1  11.1   4.79 12.7 
+ 7     1   5.72  1.16  4.28
+ 8     1   8.37  1.09  4.98
+ 9     1  10.7   3.91  5.2 
+10     1  14.3   3.13  6.07
+# … with 5,291 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-pca-1-auto {
+  color: #777;
+  width: 60%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-1-auto {
+  width: 38%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+*library(broom)
+```
+]
+ 
+.right-output-pca-2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+library(broom)  
+
+# compute PCA
+* j_data5
+```
+]
+ 
+.right-output-pca-2-auto[
+
+```
+# A tibble: 5,301 x 4
+    Spit Length Thick Width
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     1  22.0   3.34 20.4 
+ 2     1  14.6   2.74 19.1 
+ 3     1  29.6   7.25 11.6 
+ 4     1   5.83  2.05  6.54
+ 5     1   7.07  1.13  6.56
+ 6     1  11.1   4.79 12.7 
+ 7     1   5.72  1.16  4.28
+ 8     1   8.37  1.09  4.98
+ 9     1  10.7   3.91  5.2 
+10     1  14.3   3.13  6.07
+# … with 5,291 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+library(broom)  
+
+# compute PCA
+  j_data5 %&gt;%  
+* nest(data=everything())
+```
+]
+ 
+.right-output-pca-2-auto[
+
+```
+# A tibble: 1 x 1
+  data                
+  &lt;list&gt;              
+1 &lt;tibble [5,301 × 4]&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+library(broom)  
+
+# compute PCA
+  j_data5 %&gt;%  
+  nest(data=everything()) %&gt;%  
+* mutate(pca = map(data,
+*                  ~prcomp(.x %&gt;%
+*                            select(-Spit),
+*                          center = TRUE,
+*                          scale = TRUE)),
+*        pca_aug = map2(pca,data,
+*                       ~augment(.x,
+*                                data = .y)))
+```
+]
+ 
+.right-output-pca-2-auto[
+
+```
+# A tibble: 1 x 3
+  data                 pca      pca_aug             
+  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
+1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute PCA
+.left-code-pca-2-auto[
+
+```r
+library(broom)  
+
+# compute PCA
+  j_data5 %&gt;%  
+  nest(data=everything()) %&gt;%  
+  mutate(pca = map(data,  
+                   ~prcomp(.x %&gt;%  
+                             select(-Spit),  
+                           center = TRUE,  
+                           scale = TRUE)),  
+         pca_aug = map2(pca,data,  
+                        ~augment(.x,  
+                                 data = .y)))  
+```
+]
+ 
+.right-output-pca-2-auto[
+
+```
+# A tibble: 1 x 3
+  data                 pca      pca_aug             
+  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
+1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+```
+]
+
+&lt;style&gt;
+.left-code-pca-2-auto {
+  color: #777;
+  width: 70%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-2-auto {
+  width: 28%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+* j_data5_pca
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 1 x 3
+  data                 pca      pca_aug             
+  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
+1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+  j_data5_pca %&gt;%  
+* unnest(pca_aug)
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 5,301 x 10
+   data    pca   .rownames  Spit Length Thick Width .fittedPC1 .fittedPC2 .fittedPC3
+   &lt;list&gt;  &lt;lis&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+ 1 &lt;tibbl… &lt;prc… 1             1  22.0   3.34 20.4     -2.06      -0.634      1.18  
+ 2 &lt;tibbl… &lt;prc… 2             1  14.6   2.74 19.1     -1.18      -1.06       0.601 
+ 3 &lt;tibbl… &lt;prc… 3             1  29.6   7.25 11.6     -2.70       1.52       0.724 
+ 4 &lt;tibbl… &lt;prc… 4             1   5.83  2.05  6.54     0.874     -0.0909    -0.254 
+ 5 &lt;tibbl… &lt;prc… 5             1   7.07  1.13  6.56     0.959     -0.112      0.113 
+ 6 &lt;tibbl… &lt;prc… 6             1  11.1   4.79 12.7     -0.722     -0.218     -0.382 
+ 7 &lt;tibbl… &lt;prc… 7             1   5.72  1.16  4.28     1.28       0.0993    -0.0605
+ 8 &lt;tibbl… &lt;prc… 8             1   8.37  1.09  4.98     1.00       0.186      0.225 
+ 9 &lt;tibbl… &lt;prc… 9             1  10.7   3.91  5.2      0.195      0.646     -0.303 
+10 &lt;tibbl… &lt;prc… 10            1  14.3   3.13  6.07    -0.0270     0.693      0.264 
+# … with 5,291 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+  j_data5_pca %&gt;%  
+  unnest(pca_aug) %&gt;%  
+* summarize_at(vars(contains("PC",
+*                            ignore.case = FALSE)),
+*              funs(var))
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 1 x 3
+  .fittedPC1 .fittedPC2 .fittedPC3
+       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+1       2.36      0.343      0.294
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+  j_data5_pca %&gt;%  
+  unnest(pca_aug) %&gt;%  
+  summarize_at(vars(contains("PC",  
+                             ignore.case = FALSE)),  
+               funs(var)) %&gt;%  
+* gather(key = pc, value = variance)
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 3 x 2
+  pc         variance
+  &lt;chr&gt;         &lt;dbl&gt;
+1 .fittedPC1    2.36 
+2 .fittedPC2    0.343
+3 .fittedPC3    0.294
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+  j_data5_pca %&gt;%  
+  unnest(pca_aug) %&gt;%  
+  summarize_at(vars(contains("PC",  
+                             ignore.case = FALSE)),  
+               funs(var)) %&gt;%  
+  gather(key = pc, value = variance) %&gt;%  
+* mutate(var_exp = variance / sum(variance),
+*        cum_var_exp = cumsum(var_exp),
+*        pc = str_replace(pc, ".fitted", ""))
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 3 x 4
+  pc    variance var_exp cum_var_exp
+  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+1 PC1      2.36   0.788        0.788
+2 PC2      0.343  0.114        0.902
+3 PC3      0.294  0.0979       1    
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA
+.left-code-pca-3-auto[
+
+```r
+# how much variance is
+# explained by the PCs
+  j_data5_pca %&gt;%  
+  unnest(pca_aug) %&gt;%  
+  summarize_at(vars(contains("PC",  
+                             ignore.case = FALSE)),  
+               funs(var)) %&gt;%  
+  gather(key = pc, value = variance) %&gt;%  
+  mutate(var_exp = variance / sum(variance),  
+         cum_var_exp = cumsum(var_exp),  
+         pc = str_replace(pc, ".fitted", ""))  
+```
+]
+ 
+.right-output-pca-3-auto[
+
+```
+# A tibble: 3 x 4
+  pc    variance var_exp cum_var_exp
+  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+1 PC1      2.36   0.788        0.788
+2 PC2      0.343  0.114        0.902
+3 PC3      0.294  0.0979       1    
+```
+]
+
+&lt;style&gt;
+.left-code-pca-3-auto {
+  color: #777;
+  width: 70%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-3-auto {
+  width: 28%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+*var_exp
+```
+]
+ 
+.right-output-pca-4-auto[
+
+```
+# A tibble: 3 x 4
+  pc    variance var_exp cum_var_exp
+  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+1 PC1      2.36   0.788        0.788
+2 PC2      0.343  0.114        0.902
+3 PC3      0.294  0.0979       1    
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+* rename(
+*   `Variance Explained` = var_exp,
+*   `Cumulative Variance Explained` = cum_var_exp
+* )
+```
+]
+ 
+.right-output-pca-4-auto[
+
+```
+# A tibble: 3 x 4
+  pc    variance `Variance Explained` `Cumulative Variance Explained`
+  &lt;chr&gt;    &lt;dbl&gt;                &lt;dbl&gt;                           &lt;dbl&gt;
+1 PC1      2.36                0.788                            0.788
+2 PC2      0.343               0.114                            0.902
+3 PC3      0.294               0.0979                           1    
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+* pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,
+*               names_to = "key",
+*              values_to = "value")
+```
+]
+ 
+.right-output-pca-4-auto[
+
+```
+# A tibble: 6 x 4
+  pc    variance key                            value
+  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt;
+1 PC1      2.36  Variance Explained            0.788 
+2 PC1      2.36  Cumulative Variance Explained 0.788 
+3 PC2      0.343 Variance Explained            0.114 
+4 PC2      0.343 Cumulative Variance Explained 0.902 
+5 PC3      0.294 Variance Explained            0.0979
+6 PC3      0.294 Cumulative Variance Explained 1     
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+* ggplot(aes(pc,
+*            value,
+*            group = key))
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_4_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+* geom_point()
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+  geom_point() +  
+* geom_line()
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+  geom_point() +  
+  geom_line() +  
+* facet_wrap(~key, scales = "free_y")
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+  geom_point() +  
+  geom_line() +  
+  facet_wrap(~key, scales = "free_y") +  
+* theme_bw(base_size = 20)
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+  geom_point() +  
+  geom_line() +  
+  facet_wrap(~key, scales = "free_y") +  
+  theme_bw(base_size = 20) +  
+* lims(y = c(0, 1))
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_9_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Inspect PCA variance explained
+.left-code-pca-4-auto[
+
+```r
+var_exp %&gt;%  
+  rename(  
+    `Variance Explained` = var_exp,  
+    `Cumulative Variance Explained` = cum_var_exp  
+  ) %&gt;%  
+  pivot_longer(`Variance Explained`:`Cumulative Variance Explained`,  
+                names_to = "key",  
+               values_to = "value") %&gt;%  
+  ggplot(aes(pc,  
+             value,  
+             group = key)) +  
+  geom_point() +  
+  geom_line() +  
+  facet_wrap(~key, scales = "free_y") +  
+  theme_bw(base_size = 20) +  
+  lims(y = c(0, 1)) +  
+* labs(y = "Variance",
+*      title = "Variance explained by each principal component")
+```
+]
+ 
+.right-output-pca-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-4_auto_10_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-pca-4-auto {
+  color: #777;
+  width: 70%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-4-auto {
+  width: 28%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Visualise PCA results
+.left-code-pca-5-auto[
+
+```r
+*library(ggfortify)
+```
+]
+ 
+.right-output-pca-5-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise PCA results
+.left-code-pca-5-auto[
+
+```r
+library(ggfortify)  
+*j_data5_pca
+```
+]
+ 
+.right-output-pca-5-auto[
+
+```
+# A tibble: 1 x 3
+  data                 pca      pca_aug             
+  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;              
+1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt;
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise PCA results
+.left-code-pca-5-auto[
+
+```r
+library(ggfortify)  
+j_data5_pca %&gt;%  
+* mutate(
+*   pca_graph = map2(.x = pca, .y = data,
+*     ~ autoplot(.x,
+*                loadings = TRUE,
+*                loadings.label = TRUE,
+*                loadings.label.repel = TRUE,
+*                data = .y,
+*                label = TRUE,
+*                label.label = "Spit",
+*                label.repel = TRUE) +
+*       theme_bw() +
+*       labs(x = "Principal Component 1",
+*            y = "Principal Component 2",
+*            title = "First two principal components of PCA")))
+```
+]
+ 
+.right-output-pca-5-auto[
+
+```
+# A tibble: 1 x 4
+  data                 pca      pca_aug              pca_graph
+  &lt;list&gt;               &lt;list&gt;   &lt;list&gt;               &lt;list&gt;   
+1 &lt;tibble [5,301 × 4]&gt; &lt;prcomp&gt; &lt;tibble [5,301 × 8]&gt; &lt;gg&gt;     
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise PCA results
+.left-code-pca-5-auto[
+
+```r
+library(ggfortify)  
+j_data5_pca %&gt;%  
+  mutate(  
+    pca_graph = map2(.x = pca, .y = data,  
+      ~ autoplot(.x,  
+                 loadings = TRUE,  
+                 loadings.label = TRUE,  
+                 loadings.label.repel = TRUE,  
+                 data = .y,  
+                 label = TRUE,  
+                 label.label = "Spit",  
+                 label.repel = TRUE) +  
+        theme_bw() +  
+        labs(x = "Principal Component 1",  
+             y = "Principal Component 2",  
+             title = "First two principal components of PCA"))) %&gt;%  
+* pull(pca_graph)
+```
+]
+ 
+.right-output-pca-5-auto[
+
+```
+[[1]]
+```
+
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-5_auto_4_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise PCA results
+.left-code-pca-5-auto[
+
+```r
+library(ggfortify)  
+j_data5_pca %&gt;%  
+  mutate(  
+    pca_graph = map2(.x = pca, .y = data,  
+      ~ autoplot(.x,  
+                 loadings = TRUE,  
+                 loadings.label = TRUE,  
+                 loadings.label.repel = TRUE,  
+                 data = .y,  
+                 label = TRUE,  
+                 label.label = "Spit",  
+                 label.repel = TRUE) +  
+        theme_bw() +  
+        labs(x = "Principal Component 1",  
+             y = "Principal Component 2",  
+             title = "First two principal components of PCA"))) %&gt;%  
+  pull(pca_graph)  
+```
+]
+ 
+.right-output-pca-5-auto[
+
+```
+[[1]]
+```
+
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-5_auto_5_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-pca-5-auto {
+  color: #777;
+  width: 70%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-5-auto {
+  width: 28%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-1.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-2.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-3.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-4.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-5.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-6.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-7.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-8.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-9.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-10.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-11.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/allison-horst-kmeans-12.jpg)
+background-size: contain
+
+---
+
+class: left, bottom
+
+background-image: url(figures/kmeans-animation.gif)
+background-size: contain
+
+---
+
+# Let's do a k-means analysis to see what groups exist in our data. 
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+*j_data4 &lt;-  j_data
+```
+]
+ 
+.right-output-k-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+* filter(Material %in% c("Silcrete"))
+```
+]
+ 
+.right-output-k-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+* select(Length,
+*        Thick,
+*        Width)
+```
+]
+ 
+.right-output-k-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+  select(Length,  
+         Thick,  
+         Width) %&gt;%  
+* drop_na()
+```
+]
+ 
+.right-output-k-1-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+  select(Length,  
+         Thick,  
+         Width) %&gt;%  
+  drop_na()  
+
+# inspect
+*ggplot(j_data4)
+```
+]
+ 
+.right-output-k-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_5_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+  select(Length,  
+         Thick,  
+         Width) %&gt;%  
+  drop_na()  
+
+# inspect
+ggplot(j_data4) +  
+* aes(Length,
+*     Thick,
+*     colour = Width)
+```
+]
+ 
+.right-output-k-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_6_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+  select(Length,  
+         Thick,  
+         Width) %&gt;%  
+  drop_na()  
+
+# inspect
+ggplot(j_data4) +  
+  aes(Length,  
+      Thick,  
+      colour = Width) +  
+* geom_point()
+```
+]
+ 
+.right-output-k-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Prepare and inspect our data
+.left-code-k-1-auto[
+
+```r
+# filter the data to
+# focus on our question
+# prepare data
+j_data4 &lt;-  j_data %&gt;%  
+  filter(Material %in% c("Silcrete")) %&gt;%  
+  select(Length,  
+         Thick,  
+         Width) %&gt;%  
+  drop_na()  
+
+# inspect
+ggplot(j_data4) +  
+  aes(Length,  
+      Thick,  
+      colour = Width) +  
+  geom_point() +  
+* theme_minimal()
+```
+]
+ 
+.right-output-k-1-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_8_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-k-1-auto {
+  color: #777;
+  width: 60%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-k-1-auto {
+  width: 38%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Find our how many clusters we need
+.left-code-k-2-auto[
+
+```r
+# find an appropriate number of clusters to use.
+*library(factoextra)
+```
+]
+ 
+.right-output-k-2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Find our how many clusters we need
+.left-code-k-2-auto[
+
+```r
+# find an appropriate number of clusters to use.
+library(factoextra)  
+
+*fviz_nbclust(j_data4,
+*            kmeans,
+*            method = "wss")
+```
+]
+ 
+.right-output-k-2-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-2_auto_2_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Find our how many clusters we need
+.left-code-k-2-auto[
+
+```r
+# find an appropriate number of clusters to use.
+library(factoextra)  
+
+fviz_nbclust(j_data4,  
+             kmeans,  
+             method = "wss") +  
+* geom_vline(xintercept = 4)
+```
+]
+ 
+.right-output-k-2-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-2_auto_3_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-k-2-auto {
+  color: #777;
+  width: 65%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-k-2-auto {
+  width: 30%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Compute the cluster analysis
+.left-code-k-3-auto[
+
+```r
+# compute clusters
+*kmeans_output &lt;- kmeans(j_data4,
+*                       centers = 4,
+*                       nstart = 50)
+```
+]
+ 
+.right-output-k-3-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the cluster analysis
+.left-code-k-3-auto[
+
+```r
+# compute clusters
+kmeans_output &lt;- kmeans(j_data4,  
+                        centers = 4,  
+                        nstart = 50)  
+
+# view tidy output
+*tidy(kmeans_output)
+```
+]
+ 
+.right-output-k-3-auto[
+
+```
+# A tibble: 4 x 6
+     x1    x2    x3  size withinss cluster
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+1 25.9   6.71 18.8      6     439. 1      
+2  6.89  2.04  6.36    34     283. 2      
+3 11.3   2.89  9.88    40     559. 3      
+4 13.8   3.50 16.7     14     243. 4      
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Compute the cluster analysis
+.left-code-k-3-auto[
+
+```r
+# compute clusters
+kmeans_output &lt;- kmeans(j_data4,  
+                        centers = 4,  
+                        nstart = 50)  
+
+# view tidy output
+tidy(kmeans_output)  
+
+# see which cluster each
+# artefact is in
+*augment(kmeans_output, j_data4)
+```
+]
+ 
+.right-output-k-3-auto[
+
+```
+# A tibble: 4 x 6
+     x1    x2    x3  size withinss cluster
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+1 13.8   3.50 16.7     14     243. 1      
+2 25.9   6.71 18.8      6     439. 2      
+3  6.89  2.04  6.36    34     283. 3      
+4 11.3   2.89  9.88    40     559. 4      
+```
+
+```
+# A tibble: 94 x 4
+   Length Thick Width .cluster
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   
+ 1  10.9   3.14 13.0  4       
+ 2   6.72  2.06  6.49 3       
+ 3  10.9   1.96 16.1  1       
+ 4   6.55  2.9   9.46 3       
+ 5  12.3   2.22  9.75 4       
+ 6   5.07  1.27 10.4  3       
+ 7   7.97  2.34  8.14 3       
+ 8   7.58  2.81  6.23 3       
+ 9   8.15  2.31  4.81 3       
+10   8.89  2.02  9.03 4       
+# … with 84 more rows
+```
+]
+
+&lt;style&gt;
+.left-code-k-3-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-k-3-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+
+
+class: split-40
+count: false
+ 
+Visualise the clusters with the data
+.left-code-k-4-auto[
+
+```r
+# visualise the clusters
+# in our data
+*j_data4
+```
+]
+ 
+.right-output-k-4-auto[
+
+```
+# A tibble: 94 x 3
+   Length Thick Width
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  10.9   3.14 13.0 
+ 2   6.72  2.06  6.49
+ 3  10.9   1.96 16.1 
+ 4   6.55  2.9   9.46
+ 5  12.3   2.22  9.75
+ 6   5.07  1.27 10.4 
+ 7   7.97  2.34  8.14
+ 8   7.58  2.81  6.23
+ 9   8.15  2.31  4.81
+10   8.89  2.02  9.03
+# … with 84 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with the data
+.left-code-k-4-auto[
+
+```r
+# visualise the clusters
+# in our data
+j_data4 %&gt;%  
+* mutate(cluster = kmeans_output$cluster)
+```
+]
+ 
+.right-output-k-4-auto[
+
+```
+# A tibble: 94 x 4
+   Length Thick Width cluster
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
+ 1  10.9   3.14 13.0        1
+ 2   6.72  2.06  6.49       3
+ 3  10.9   1.96 16.1        2
+ 4   6.55  2.9   9.46       3
+ 5  12.3   2.22  9.75       1
+ 6   5.07  1.27 10.4        3
+ 7   7.97  2.34  8.14       3
+ 8   7.58  2.81  6.23       3
+ 9   8.15  2.31  4.81       3
+10   8.89  2.02  9.03       1
+# … with 84 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with the data
+.left-code-k-4-auto[
+
+```r
+# visualise the clusters
+# in our data
+j_data4 %&gt;%  
+  mutate(cluster = kmeans_output$cluster) %&gt;%  
+* ggplot(aes(Length,
+*            Thick,
+*            color = factor(cluster),
+*            label = cluster))
+```
+]
+ 
+.right-output-k-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-4_auto_3_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with the data
+.left-code-k-4-auto[
+
+```r
+# visualise the clusters
+# in our data
+j_data4 %&gt;%  
+  mutate(cluster = kmeans_output$cluster) %&gt;%  
+  ggplot(aes(Length,  
+             Thick,  
+             color = factor(cluster),  
+             label = cluster)) +  
+* geom_text()
+```
+]
+ 
+.right-output-k-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-4_auto_4_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with the data
+.left-code-k-4-auto[
+
+```r
+# visualise the clusters
+# in our data
+j_data4 %&gt;%  
+  mutate(cluster = kmeans_output$cluster) %&gt;%  
+  ggplot(aes(Length,  
+             Thick,  
+             color = factor(cluster),  
+             label = cluster)) +  
+  geom_text() +  
+* theme_minimal()
+```
+]
+ 
+.right-output-k-4-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-4_auto_5_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-k-4-auto {
+  color: #777;
+  width: 65%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-k-4-auto {
+  width: 30%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+class: split-40
+count: false
+ 
+Visualise the clusters with a PCA
+.left-code-k-5-auto[
+
+```r
+# visualise the clusters in PCA
+*fviz_cluster(kmeans_output,
+*            data = j_data4)
+```
+]
+ 
+.right-output-k-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-5_auto_1_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with a PCA
+.left-code-k-5-auto[
+
+```r
+# visualise the clusters in PCA
+fviz_cluster(kmeans_output,  
+             data = j_data4) +  
+* theme_minimal()
+```
+]
+ 
+.right-output-k-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-5_auto_2_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-k-5-auto {
+  color: #777;
+  width: 65%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-k-5-auto {
+  width: 30%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
+
+background-image: url(https://images.unsplash.com/photo-1543175451-3d57d601828c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80)
+background-size: cover
+
+---
+
+
+
+background-image: url(figures/end.gif)
+background-size: cover
+
+
+---
+
+class: inverse, middle, center
+
+The flipbooked portion of this presentation was created with the new {flipbookr} package.  Get it with `remotes::install_github("EvaMaeRey/flipbookr")`
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlighStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

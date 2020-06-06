@@ -1,0 +1,43 @@
+---
+title: "test"
+author: "Ben Marwick, June 2020"
+output:
+  xaringan::moon_reader:
+    css: "xaringan-themer.css"
+    nature:
+      ratio: "16:9"
+      highlighStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+knitr::opts_chunk$set(fig.width = 6, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      comment = "", 
+                      cache = FALSE, 
+                      fig.retina = 3)
+library(flipbookr)
+library(tidyverse)
+
+# reference on how to do things
+# https://evamaerey.github.io/little_flipbooks_library/flipbookr/skeleton
+# https://arm.rbind.io/slides/xaringan.html
+# images from https://unsplash.com/
+# my infer ex. https://gist.github.com/benmarwick/6e17b6435ffb811f6deb4586d36c5282
+# slides by Chester: https://ismayc.github.io/talks/infer-useR/slide_deck.html#1
+```
+
+```{r test}
+## From Agresti(2007) p.39
+M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
+dimnames(M) <- list(gender = c("F", "M"),
+                    party = c("Democrat","Independent", "Republican"))
+chisq.test(M)
+```
+
+
+`r chunk_reveal("test", break_type = "auto")`
