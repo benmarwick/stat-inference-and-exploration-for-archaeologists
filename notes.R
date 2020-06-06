@@ -445,7 +445,8 @@ working_data <- nb_data %>%
          featFreq, 
          toolDiv, 
          lithDens, 
-         EstimatedArea)
+         EstimatedArea,
+         Sites)
 
 write_csv(working_data, here::here("data/cascalheira-bicho-2020-data-prepped.csv"))
 
@@ -454,14 +455,18 @@ write_csv(working_data, here::here("data/cascalheira-bicho-2020-data-prepped.csv
 
 
 # get the prepped data
-nb_data <- rio::import("https://bit.ly/2XFcOB5")
+nb_data <- rio::import("https://bit.ly/2XFcOB5", 
+                       setclass = "tibble")
 
+# inspect the data
+str(nb_data)
 
-row.names(working_data) <- nb_data$Sites
+# prepare the data
+nb_data_rownames <- nb_data %>% column_to_rownames(var="Sites")
 
 library(FactoMineR)
 # compute PCA
-res.pca <- PCA(working_data, 
+res.pca <- PCA(nb_data_rownames, 
                graph = FALSE)
 
 # inspect eigenvalues, values >1 indicate that component captures more
@@ -471,6 +476,13 @@ res.pca$eig
 # inspect distribution of PCs
 library(factoextra)
 fviz_screeplot(res.pca)
+
+
+# Contributions of variables to PC1
+fviz_contrib(res.pca, choice = "var", axes = 1, top = 10)
+
+# Contributions of variables to PC2
+fviz_contrib(res.pca, choice = "var", axes = 2, top = 10)
 
 # Visualise output from the PCA ------------------------------------------
 

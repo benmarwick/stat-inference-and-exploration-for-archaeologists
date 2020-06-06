@@ -89,11 +89,11 @@ I will demonstrate and you will practice...
 
 --
 
-- Principal Components Analysis  
+- Exploration: Principal Components Analysis  
 
 --
 
-- k-means clustering   
+- Exploration: k-means clustering   
 
 ---
 
@@ -131,17 +131,17 @@ background-size: cover
 
 ---
 
-# Your turn
+# Your turn: import the data
 
 ```{r, code = knitr::knit_code$get("import"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+`r countdown(minutes = 2, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
 ---
 
 class: center, middle 
 
-# Let's do some hypothesis testing 🧪 We will use the `infer` package and the [Modern Dive](https://moderndive.com/) book
+# Let's do some hypothesis testing 🧪 We will use the `infer` package and the [Modern Dive](https://moderndive.com/) book by Chester Ismay and Albert Y. Kim
 
 ---
 
@@ -232,16 +232,29 @@ Visualize the statistic relative to the null distribution of our generated data
 
 ---
 
-# Let's do a chi-square test for the independence of raw material type and artefact type of our stone artefacts. Is the association between artefact type and raw material type random or independent? 
+# Let's do a chi-square test for the independence of raw material type and artefact type of our stone artefacts. 
+
+--
+
+# Is the association between artefact type and raw material type random or independent? 
 
 ---
+
+```{r prep-data, echo = FALSE, eval = TRUE}
+library(tidyverse); library(infer)
+# filter the data to focus on our question
+j_data1 <- j_data %>% 
+  filter(Material %in% c("Volcanic", "Quartzite")) %>% 
+  filter(Artclas %in% c("Flake", "Hshat", "FFrag")) 
+```
+
 
 ```{r, test-chi-square-1, echo = FALSE, eval = FALSE, results = 'hide'}
 library(tidyverse)
 
 # filter the data to 
 # focus on our question
-j_data1 <- j_data %>% 
+j_data %>% 
   filter(Material %in% c("Volcanic", "Quartzite")) %>% 
   filter(Artclas %in% c("Flake", "Hshat", "FFrag")) 
 
@@ -257,14 +270,6 @@ ggplot(j_data1) +
 `r chunk_reveal("test-chi-square-1", break_type = "auto", width_code = "70%", width_output = "25%", title = "Prepare our data for a chi-square test: Is flake type independant from raw material type?")`
 
 ---
-
-```{r prep-data, echo = FALSE, eval = TRUE}
-# filter the data to focus on our question
-j_data1 <- j_data %>% 
-  filter(Material %in% c("Volcanic", "Quartzite")) %>% 
-  filter(Artclas %in% c("Flake", "Hshat", "FFrag")) 
-```
-
 
 ```{r, test-chi-square-2, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
 library(infer)
@@ -310,8 +315,7 @@ chi_square_stat <- j_data1 %>%
 null_distribution <-  j_data1 %>% 
   specify(Material ~ Artclas) %>% 
   hypothesize(null = "independence") %>% 
-  generate(reps = 1000,
-           type = "permute") %>% 
+  generate(reps = 1000, type = "permute") %>% 
   calculate(stat = "Chisq")
 ```
 
@@ -359,7 +363,7 @@ j_data1 %>%
 
 ---
 
-# Your turn
+# Your turn: chi-square
 
 ```{r, code = knitr::knit_code$get("prep-data"), eval = FALSE, echo = TRUE}
 ```
@@ -370,11 +374,29 @@ j_data1 %>%
 ```{r, code = knitr::knit_code$get("test-chi-square-3"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 10, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+`r countdown(minutes = 7, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
 
 ---
 
-# Let's do a t-test for the independence of flake length by two types of raw material in our stone artefacts. Are the lengths of Volcanic and Chert flakes equivalent or different? 
+# Let's do a t-test for the independence of flake length by two types of raw material in our stone artefacts. 
+
+--
+
+# Are the lengths of Volcanic and Chert flakes equivalent or different? 
+
+---
+
+class:  center, left
+
+.pull-left[
+![](figures/allison-horst-profile-pic.jpeg)
+]
+
+
+.pull-right[
+# Illustations by Allison Horst
+Artist-in-Residence at RStudio
+]
 
 ---
 
@@ -426,8 +448,14 @@ background-size: contain
 
 ---
 
+```{r t-test-2a, echo = FALSE, eval = TRUE}
+# filter the data to focus on our question
+j_data2 <- j_data %>% 
+  filter(Material %in% c("Volcanic", "Chert")) %>% 
+  filter(Artclas == "Flake") 
+```
+
 ```{r, t-test-1, echo = FALSE, eval = FALSE, results = 'hide'}
-library(tidyverse)
 
 # filter the data to 
 # focus on our question
@@ -449,16 +477,7 @@ ggplot(j_data2) +
 
 ---
 
-```{r t-test-2a, echo = FALSE, eval = TRUE}
-# filter the data to focus on our question
-j_data2 <- j_data %>% 
-  filter(Material %in% c("Volcanic", "Chert")) %>% 
-  filter(Artclas == "Flake") 
-```
-
 ```{r, t-test-2b, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
-
-library(infer)
 
 # compute t-test statistic
 j_data2 %>%
@@ -525,7 +544,8 @@ background-size: cover
 j_data1 %>% 
   t_test(Length ~ Material, 
          order = c("Volcanic", 
-                   "Quartzite"))
+                   "Quartzite")) %>% 
+  str()
 ```
 
 `r chunk_reveal("t-test-4", break_type = "auto", width_code = "50%", width_output = "45%")`
@@ -538,7 +558,7 @@ j_data1 %>%
 
 ---
 
-# Your turn
+# Your turn: t-test
 
 ```{r, code = knitr::knit_code$get("t-test-2a"), eval = FALSE, echo = TRUE}
 ```
@@ -549,13 +569,22 @@ j_data1 %>%
 ```{r, code = knitr::knit_code$get("t-test-3"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 10, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+`r countdown(minutes = 7, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
 
 ---
 
-# Let's do an ANOVA for the independence of flake length by _all_ types of raw material in our stone artefacts. Are the lengths of flakes equivalent or different for _all_ categories of raw material? 
+# Let's do an ANOVA for the independence of flake length by _all_ types of raw material in our stone artefacts. 
+
+--
+
+# Are the lengths of flakes equivalent or different for _all_ categories of raw material? 
 
 ---
+
+```{r anova-1a, echo = FALSE, eval = TRUE, results = 'hide'}
+j_data3 <- j_data %>% 
+  filter(Artclas == "Flake") 
+```
 
 ```{r, anova-1, echo = FALSE, eval = FALSE, results = 'hide'}
 
@@ -579,14 +608,7 @@ ggplot(j_data3) +
 
 ---
 
-```{r anova-1a, echo = FALSE, eval = TRUE, results = 'hide'}
-j_data3 <- j_data %>% 
-  filter(Artclas == "Flake") 
-```
-
 ```{r, anova-2, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
-
-library(infer)
 
 # compute F statistic
 j_data3 %>%
@@ -641,7 +663,7 @@ null_distribution %>%
 # degrees of freedom, and p-value 
 aov(Length ~ Material,
     data = j_data3) %>% 
-  broom::tidy()
+  broom::tidy() 
 
 # inspect specific difference
 # between categories
@@ -682,10 +704,10 @@ aov(Length ~ Material,
 
 ---
 
-class: left, bottom
+class: left, top
 
 background-image: url(https://images.unsplash.com/photo-1505778276668-26b3ff7af103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1643&q=80)
-background-size: contain
+background-size: cover
 
 # Exploring the data with PCA and k-means
 
@@ -693,9 +715,9 @@ background-size: contain
 
 # Let's do a Principal Components Analysis to reduce our multivariate data into smaller set of variables to observe trends, clusters and outliers
 
----
+--
 
-# Our goal is to find some linear combinations of original variables that captures the maximum variance in the data set. These determine the which combinations of variables contain the highest variability in our data.
+Our goal is to find some linear combinations of original variables that captures the maximum variance in the data set. These determine the which combinations of variables contain the highest variability in our data.
 
 ---
 
@@ -748,92 +770,81 @@ background-size: contain
 
 ---
 
-class: left, bottom
+class:  center, left
 
-background-image: url(figures/cascalheira-bicho-2020.png)
-background-size: contain
+.pull-left[
+![](figures/cascalheira-bicho-2020-cover.png)
+]
+
+
+.pull-right[
+![](figures/cascalheira-bicho-2020.png)
+]
+
+---
+
+# Can we use stone artefact assemblage attributes to identify short-term occupations at Palaeolithic sites?
 
 ---
 
 ```{r, pca-1, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-library(tidyverse)
+library(rio)
 
-# get the data
-nb_data <- rio::import("https://bit.ly/37is3Dj")
+# get the prepped data
+nb_data <- import("https://bit.ly/2XFcOB5", 
+                  setclass = "tibble")
+
+# inspect the data
+str(nb_data)
 
 # prepare the data
-nb_data %>%
-  mutate(chipFreq = Chips/Artifacts,
-         coreFreq = Cores/Artifacts,
-         blankFreq = Blanks/Artifacts,
-         retFreq  = RetouchedTools/Artifacts,
-         featFreq = Features/SampledVolume,
-         toolDiv = ToolTypes/sqrt(RetouchedTools),
-         lithDens = Artifacts/SampledVolume
-  ) %>%
-  select(chipFreq, coreFreq, blankFreq, 
-         retFreq, featFreq, toolDiv, 
-         lithDens, EstimatedArea)
+nb_data_rownames <- nb_data %>% 
+  column_to_rownames(var="Sites")
 ```
 
-`r chunk_reveal("pca-1", break_type = "auto", title = "Prepare data for PCA", width_code = "60%", width_output = "38%")`
+`r chunk_reveal("pca-1", break_type = "auto", title = "Get and prepare data for PCA", width_code = "60%", width_output = "38%")`
 
 ---
 
 ```{r, pca-1a, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
-library(rio)
-
-# get the data
-nb_data <- import("https://bit.ly/37is3Dj")
+# get the prepped data
+nb_data <- rio::import("https://bit.ly/2XFcOB5", setclass = "tibble")
 
 # prepare the data
-working_data <- nb_data %>%
-  mutate(chipFreq = Chips/Artifacts,
-         coreFreq = Cores/Artifacts,
-         blankFreq = Blanks/Artifacts,
-         retFreq  = RetouchedTools/Artifacts,
-         featFreq = Features/SampledVolume,
-         toolDiv = ToolTypes/sqrt(RetouchedTools),
-         lithDens = Artifacts/SampledVolume) %>%
-  select(chipFreq, coreFreq, blankFreq, 
-         retFreq, featFreq, toolDiv, 
-         lithDens, EstimatedArea)
+nb_data_rownames <- nb_data %>% column_to_rownames(var="Sites")
 
 ```
 
 ```{r, pca-2, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 
 library(FactoMineR)
-row.names(working_data) <- nb_data$Sites
 
 # compute PCA
-PCA(working_data, 
-    graph = FALSE)
+res.pca <- PCA(nb_data_rownames, 
+               graph = FALSE)
+
+# inspect eigenvalues
+res.pca$eig
 
 ```
 
-`r chunk_reveal("pca-2", break_type = "auto", title = "Compute PCA", width_code = "70%", width_output = "28%")`
+`r chunk_reveal("pca-2", break_type = "auto", title = "Compute PCA")`
 
 ---
 
 ```{r, pca-2a, echo = FALSE, eval = TRUE, cache = TRUE, results = 'hide'}
 
 library(FactoMineR)
-row.names(working_data) <- nb_data$Sites
 
 # compute PCA
-res.pca <- PCA(working_data, 
-               graph = FALSE)
+res.pca <- PCA(nb_data_rownames, graph = FALSE)
+
+# inspect eigenvalues
+res.pca$eig
 
 ```
 
 ```{r, pca-3, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
-
-# inspect eigenvalues, values >1 
-# indicate that component captures more
-# variability that any of 
-# the original measurement variables
-res.pca$eig
 
 # inspect distribution of PCs
 library(factoextra)
@@ -841,22 +852,29 @@ fviz_screeplot(res.pca)
 
 ```
 
-`r chunk_reveal("pca-3", break_type = "auto", title = "Inspect PCA", width_code = "70%", width_output = "28%")`
+`r chunk_reveal("pca-3", break_type = "auto", title = "Inspect PCA")`
 
 ---
 
-```{r, pca-3a, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 
-res.pca$eig
+```{r, pca-3b, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 
-library(factoextra)
-fviz_screeplot(res.pca)
+# Contributions of 
+# variables to PC1
+fviz_contrib(res.pca, 
+             choice = "var", 
+             axes = 1, 
+             top = 10)
 
 ```
 
+`r chunk_reveal("pca-3b", break_type = "auto", title = "Contributions of variables to the PCs")`
+
+---
+
 ```{r, pca-4, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 
-# create biplot
+# draw biplot
 fviz_pca_biplot(res.pca)
 
 ```
@@ -873,17 +891,10 @@ fviz_pca_biplot(res.pca)
 ```{r, code = knitr::knit_code$get("pca-2a"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
-
----
-
-```{r, code = knitr::knit_code$get("pca-3a"), eval = FALSE, echo = TRUE}
-```
-
 ```{r, code = knitr::knit_code$get("pca-4"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+`r countdown(minutes = 7, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
 ---
 
 
@@ -982,6 +993,12 @@ background-size: contain
 
 ---
 
+```{r, k-1a, echo = FALSE, eval = TRUE, results = 'hide'}
+j_data4 <-  j_data %>% 
+  filter(Material %in% c("Silcrete")) %>% 
+  select(Length, Thick, Width)
+```
+
 ```{r, k-1, echo = FALSE, eval = FALSE, results = 'hide'}
 
 # filter the data to 
@@ -991,8 +1008,7 @@ j_data4 <-  j_data %>%
   filter(Material %in% c("Silcrete")) %>% 
   select(Length, 
          Thick,
-         Width) %>% 
-  drop_na() 
+         Width) 
 
 # inspect
 ggplot(j_data4) +
@@ -1007,18 +1023,19 @@ ggplot(j_data4) +
 
 ---
 
-```{r, k-1a, echo = FALSE, eval = TRUE, results = 'hide'}
-j_data4 <-  j_data %>% 
-  filter(Material %in% c("Silcrete")) %>% 
-  select(Length, 
-         Thick,
-         Width) %>% 
-  drop_na() 
+```{r, k-2a, echo = FALSE, eval = FALSE, results = 'hide'}
+
+# find an appropriate number of clusters to use.
+library(factoextra)
+
+fviz_nbclust(j_data4, kmeans, method = "wss") +
+  geom_vline(xintercept = 4)
 ```
 
 ```{r, k-2, echo = FALSE, eval = FALSE, results = 'hide'}
 
-# find an appropriate number of clusters to use.
+# find an appropriate 
+# number of clusters to use.
 library(factoextra)
 
 fviz_nbclust(j_data4, 
@@ -1027,34 +1044,47 @@ fviz_nbclust(j_data4,
   geom_vline(xintercept = 4)
 ```
 
-`r chunk_reveal("k-2", break_type = "auto", title = "Find our how many clusters we need", width_code = "65%", width_output = "30%")`
+`r chunk_reveal("k-2", break_type = "auto", title = "Find our how many clusters we need")`
 
 ---
+
+```{r k-3a, echo = FALSE, eval = TRUE, results = 'hide'}
+# compute clusters
+set.seed(7)
+kmeans_output <- kmeans(j_data4, centers = 4, nstart = 50)
+```
 
 ```{r, k-3, echo = FALSE, eval = FALSE, results = 'hide'}
 
 # compute clusters
-kmeans_output <- kmeans(j_data4, 
-                        centers = 4, 
-                        nstart = 50)
+kmeans(j_data4, 
+       centers = 4, 
+       nstart = 50)
 
 # view tidy output
 tidy(kmeans_output)
 
 # see which cluster each 
 # artefact is in
-augment(kmeans_output, j_data4)
+augment(kmeans_output, 
+        j_data4)
 ```
 
 `r chunk_reveal("k-3", break_type = "auto", title = "Compute the cluster analysis")`
 
 ---
 
-```{r k-3a, echo = FALSE, eval = TRUE, results = 'hide'}
-# compute clusters
-kmeans_output <- kmeans(j_data4, 
-                        centers = 4, 
-                        nstart = 50)
+```{r, k-4a, echo = FALSE, eval = FALSE, results = 'hide', width_code = "65%", width_output = "30%"}
+
+# visualise the clusters 
+# in our data
+j_data4 %>%
+  mutate(cluster = kmeans_output$cluster) %>%
+  ggplot(aes(Length, Thick, 
+             color = factor(cluster), 
+             label = cluster)) +
+  geom_text() +
+  theme_minimal()
 ```
 
 ```{r, k-4, echo = FALSE, eval = FALSE, results = 'hide', width_code = "65%", width_output = "30%"}
@@ -1081,6 +1111,7 @@ j_data4 %>%
 fviz_cluster(kmeans_output, 
              data = j_data4) +
   theme_minimal()
+
 ```
 
 `r chunk_reveal("k-5", break_type = "auto", title = "Visualise the clusters with a PCA", width_code = "65%", width_output = "30%")`
@@ -1097,16 +1128,33 @@ background-size: cover
 ```{r, code = knitr::knit_code$get("k-1a"), eval = FALSE, echo = TRUE}
 ```
 
-```{r, code = knitr::knit_code$get("k-2"), eval = FALSE, echo = TRUE}
+```{r, code = knitr::knit_code$get("k-2a"), eval = FALSE, echo = TRUE}
 ```
 
 ```{r, code = knitr::knit_code$get("k-3a"), eval = FALSE, echo = TRUE}
 ```
 
-```{r, code = knitr::knit_code$get("k-4"), eval = FALSE, echo = TRUE}
+```{r, code = knitr::knit_code$get("k-5"), eval = FALSE, echo = TRUE}
 ```
 
-`r countdown(minutes = 5, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+`r countdown(minutes = 7, color_running_background  = "lightgreen", color_running_text = "black", color_finished_background = "red", color_finished_text =  "grey30")`
+
+---
+
+# What have we done today?
+
+- Hypothesis testing: chi-square, t-test, ANOVA
+
+- Exploration: Principal Components Analysis  
+
+- Exploration: k-means clustering   
+
+---
+
+
+background-image: url(https://images.unsplash.com/photo-1503980599186-9cc36eda351a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)
+background-size: cover
+
 
 ---
 

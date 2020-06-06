@@ -76,11 +76,11 @@ I will demonstrate and you will practice...
 
 --
 
-- Principal Components Analysis  
+- Exploration: Principal Components Analysis  
 
 --
 
-- k-means clustering   
+- Exploration: k-means clustering   
 
 ---
 
@@ -155,26 +155,24 @@ j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df")
 
 ```
 # A tibble: 9,752 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0
- 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0
- 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0
- 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0
- 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0
- 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA
- 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0
- 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0
- 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0
-10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0
-# … with 9,742 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0 &lt;NA&gt;    Hertz   &lt;NA&gt;       3
+ 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0 &lt;NA&gt;    &lt;NA&gt;    Both       1
+ 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0 &lt;NA&gt;    Hertz   Long      NA
+10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 9,742 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -204,7 +202,7 @@ background-size: cover
 
 ---
 
-# Your turn
+# Your turn: import the data
 
 
 ```r
@@ -217,14 +215,14 @@ j_data &lt;- import("https://bit.ly/j_data_xlsx", setclass = "tbl_df")
 j_data
 ```
 
-<div class="countdown" id="timer_5edbfa6f" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_5edc2aa6" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ---
 
 class: center, middle 
 
-# Let's do some hypothesis testing 🧪 We will use the `infer` package and the [Modern Dive](https://moderndive.com/) book
+# Let's do some hypothesis testing 🧪 We will use the `infer` package and the [Modern Dive](https://moderndive.com/) book by Chester Ismay and Albert Y. Kim
 
 ---
 
@@ -315,9 +313,16 @@ Visualize the statistic relative to the null distribution of our generated data
 
 ---
 
-# Let's do a chi-square test for the independence of raw material type and artefact type of our stone artefacts. Is the association between artefact type and raw material type random or independent? 
+# Let's do a chi-square test for the independence of raw material type and artefact type of our stone artefacts. 
+
+--
+
+# Is the association between artefact type and raw material type random or independent? 
 
 ---
+
+
+
 
 
 
@@ -348,12 +353,33 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-*j_data1 &lt;- j_data
+*j_data
 ```
 ]
  
 .right-output-test-chi-square-1-auto[
 
+```
+# A tibble: 9,752 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown   1.83   22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     2 Chert    Yellow  0.61   14.6  RetF         0 &lt;NA&gt;    Hertz   &lt;NA&gt;       3
+ 3 J     B          1     1     3 Chert    Dk Gr…  3.81   29.6  Core         0 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1     4 Chert    Grey    0.13    5.83 RetFrag      0 &lt;NA&gt;    &lt;NA&gt;    Both       1
+ 5 J     B          1     1     5 Chert    Grey    0.05    7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1     6 Chert    Lt Br…  0.580  11.1  Core        NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1     7 Chert    Dk Br…  0.03    5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 8 J     B          1     1     8 Chert    Cream   0.02    8.37 FFrag        0 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 9 J     B          1     1     9 Chert    Grey    0.21   10.7  Flake-b      0 &lt;NA&gt;    Hertz   Long      NA
+10 J     B          1     1    10 Chert    Grey    0.25   14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 9,742 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
 ]
 
 ---
@@ -368,13 +394,34 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
 * filter(Material %in% c("Volcanic", "Quartzite"))
 ```
 ]
  
 .right-output-test-chi-square-1-auto[
 
+```
+# A tibble: 475 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    15 Volcanic Grey     1.07   6.36 Flake-b     20 Angul   Hertz   Long      NA
+ 2 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 3 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 4 J     B          1     1    59 Volcanic Dk Gr…   0.43  12.9  Shatt        0 &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 9 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+10 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+# … with 465 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
 ]
 
 ---
@@ -389,7 +436,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
 * filter(Artclas %in% c("Flake", "Hshat", "FFrag"))
 ```
@@ -397,6 +444,27 @@ j_data1 &lt;- j_data %&gt;%
  
 .right-output-test-chi-square-1-auto[
 
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
 ]
 
 ---
@@ -411,7 +479,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
   filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
 
@@ -421,6 +489,29 @@ j_data1 &lt;- j_data %&gt;%
 ]
  
 .right-output-test-chi-square-1-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
+
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_5_output-1.png" width="432" /&gt;
 ]
 
@@ -436,7 +527,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
   filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
 
@@ -448,6 +539,29 @@ ggplot(j_data1) +
 ]
  
 .right-output-test-chi-square-1-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
+
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_6_output-1.png" width="432" /&gt;
 ]
 
@@ -463,7 +577,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
   filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
 
@@ -476,6 +590,29 @@ ggplot(j_data1) +
 ]
  
 .right-output-test-chi-square-1-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
+
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_7_output-1.png" width="432" /&gt;
 ]
 
@@ -491,7 +628,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
   filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
 
@@ -505,6 +642,29 @@ ggplot(j_data1) +
 ]
  
 .right-output-test-chi-square-1-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
+
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_8_output-1.png" width="432" /&gt;
 ]
 
@@ -520,7 +680,7 @@ library(tidyverse)
 
 # filter the data to
 # focus on our question
-j_data1 &lt;- j_data %&gt;%  
+j_data %&gt;%  
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;%  
   filter(Artclas %in% c("Flake", "Hshat", "FFrag"))  
 
@@ -534,6 +694,29 @@ ggplot(j_data1) +
 ]
  
 .right-output-test-chi-square-1-auto[
+
+```
+# A tibble: 297 x 48
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
+```
+
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/test-chi-square-1_auto_9_output-1.png" width="432" /&gt;
 ]
 
@@ -555,9 +738,6 @@ ggplot(j_data1) +
 
 
 ---
-
-
-
 
 
 
@@ -595,26 +775,24 @@ library(infer)
 
 ```
 # A tibble: 297 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
- 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
- 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
- 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
- 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
- 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
- 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
- 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
- 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
-10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
-# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -740,26 +918,24 @@ X-squared
 
 ```
 # A tibble: 297 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
- 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
- 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
- 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
- 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
- 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
- 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
- 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
- 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
-10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
-# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -1146,26 +1322,24 @@ count: false
 
 ```
 # A tibble: 297 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
- 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
- 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
- 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
- 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
- 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
- 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
- 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
- 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
-10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
-# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -1219,10 +1393,11 @@ j_data1 %&gt;%
 
 ---
 
-# Your turn
+# Your turn: chi-square
 
 
 ```r
+library(tidyverse); library(infer)
 # filter the data to focus on our question
 j_data1 &lt;- j_data %&gt;% 
   filter(Material %in% c("Volcanic", "Quartzite")) %&gt;% 
@@ -1234,8 +1409,7 @@ j_data1 &lt;- j_data %&gt;%
 null_distribution &lt;-  j_data1 %&gt;% 
   specify(Material ~ Artclas) %&gt;% 
   hypothesize(null = "independence") %&gt;% 
-  generate(reps = 1000,
-           type = "permute") %&gt;% 
+  generate(reps = 1000, type = "permute") %&gt;% 
   calculate(stat = "Chisq")
 ```
 
@@ -1249,13 +1423,31 @@ null_distribution %&gt;%
   theme_bw(base_size = 20)
 ```
 
-<div class="countdown" id="timer_5edbf922" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_5edc2a20" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
 
-# Let's do a t-test for the independence of flake length by two types of raw material in our stone artefacts. Are the lengths of Volcanic and Chert flakes equivalent or different? 
+# Let's do a t-test for the independence of flake length by two types of raw material in our stone artefacts. 
+
+--
+
+# Are the lengths of Volcanic and Chert flakes equivalent or different? 
+
+---
+
+class:  center, left
+
+.pull-left[
+![](figures/allison-horst-profile-pic.jpeg)
+]
+
+
+.pull-right[
+# Illustations by Allison Horst
+Artist-in-Residence at RStudio
+]
 
 ---
 
@@ -1309,6 +1501,8 @@ background-size: contain
 
 
 
+
+
 class: split-40
 count: false
  
@@ -1316,24 +1510,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-*library(tidyverse)
-```
-]
- 
-.right-output-t-test-1-auto[
-
-]
-
----
-class: split-40
-count: false
- 
-Prepare our data for a t-test: Is flake length independant from raw material type?
-.left-code-t-test-1-auto[
-
-```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1353,8 +1529,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1375,8 +1549,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1398,8 +1570,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1413,7 +1583,7 @@ j_data2 &lt;- j_data %&gt;%
 ]
  
 .right-output-t-test-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_5_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_4_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -1424,8 +1594,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1441,7 +1609,7 @@ ggplot(j_data2) +
 ]
  
 .right-output-t-test-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_6_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_5_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -1452,8 +1620,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1470,7 +1636,7 @@ ggplot(j_data2) +
 ]
  
 .right-output-t-test-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_7_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_6_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -1481,8 +1647,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1500,7 +1664,7 @@ ggplot(j_data2) +
 ]
  
 .right-output-t-test-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_8_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_7_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -1511,8 +1675,6 @@ Prepare our data for a t-test: Is flake length independant from raw material typ
 .left-code-t-test-1-auto[
 
 ```r
-library(tidyverse)  
-
 # filter the data to
 # focus on our question
 # prepare data
@@ -1530,7 +1692,7 @@ ggplot(j_data2) +
 ]
  
 .right-output-t-test-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_9_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/t-test-1_auto_8_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
@@ -1554,8 +1716,6 @@ ggplot(j_data2) +
 
 
 
-
-
 class: split-40
 count: false
  
@@ -1563,24 +1723,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-*library(infer)
-```
-]
- 
-.right-output-t-test-2b-auto[
-
-]
-
----
-class: split-40
-count: false
- 
-Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
-.left-code-t-test-2b-auto[
-
-```r
-library(infer)  
-
 # compute t-test statistic
 *j_data2
 ```
@@ -1590,26 +1732,24 @@ library(infer)
 
 ```
 # A tibble: 4,697 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
- 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
- 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
- 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
- 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
- 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
- 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
- 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
- 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
-10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
-# … with 4,687 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0 &lt;NA&gt;    Hertz   Trans     NA
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 4,687 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -1621,8 +1761,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
 * specify(Length ~ Material)
@@ -1659,8 +1797,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -1687,8 +1823,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -1712,26 +1846,24 @@ j_data2 %&gt;%
 
 ```
 # A tibble: 4,697 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
- 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
- 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
- 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
- 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
- 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
- 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
- 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
- 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
-10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
-# … with 4,687 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0 &lt;NA&gt;    Hertz   Trans     NA
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 4,687 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -1743,8 +1875,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -1795,8 +1925,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -1849,8 +1977,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -1906,8 +2032,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-t-test-2b-auto[
 
 ```r
-library(infer)  
-
 # compute t-test statistic
 j_data2 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2116,26 +2240,24 @@ count: false
 
 ```
 # A tibble: 297 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0
- 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60
- 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA
- 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA
- 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA
- 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA
- 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA
- 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40
- 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0
-10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40
-# … with 287 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1    33 Volcanic Brown    0.23   8.5  Flake        0 &lt;NA&gt;    Bending &lt;NA&gt;      NA
+ 2 J     B          1     1    38 Volcanic Dk Gr…   0.06   4.24 Flake       60 Angul   Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1    70 Volcanic Dk Br…   0.31   7.43 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 4 J     B          1     1    71 Volcanic Dk Br…   0.26   6.4  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 5 J     B          1     1    72 Volcanic Dk Br…   0.06   7.3  Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 6 J     B          1     1    73 Volcanic Dk Br…   0.16   7.84 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 7 J     B          1     1    78 Volcanic Lt Br…   0.02   6.47 Hshat       NA &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;      NA
+ 8 J     B          2     1    88 Volcanic Grey     0.38  13.3  Flake       40 Angul   Hertz   &lt;NA&gt;      NA
+ 9 J     B          3     1   130 Volcanic Grey    17.8   38.4  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          3     1   131 Volcanic Grey    32.1   57.4  Flake       40 Round   &lt;NA&gt;    &lt;NA&gt;      NA
+# … with 287 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -2166,6 +2288,39 @@ j_data1 %&gt;%
 ```
 ]
 
+---
+class: split-40
+count: false
+ 
+
+.left-code-t-test-4-auto[
+
+```r
+# get the t-test statistic,
+# degrees of freedom, and p-value
+j_data1 %&gt;%  
+  t_test(Length ~ Material,  
+         order = c("Volcanic",  
+                   "Quartzite")) %&gt;%  
+* str()
+```
+]
+ 
+.right-output-t-test-4-auto[
+
+```
+tibble [1 × 6] (S3: tbl_df/tbl/data.frame)
+ $ statistic  : Named num 0.629
+  ..- attr(*, "names")= chr "t"
+ $ t_df       : Named num 36.4
+  ..- attr(*, "names")= chr "df"
+ $ p_value    : num 0.533
+ $ alternative: chr "two.sided"
+ $ lower_ci   : num -2.6
+ $ upper_ci   : num 4.95
+```
+]
+
 &lt;style&gt;
 .left-code-t-test-4-auto {
   color: #777;
@@ -2191,7 +2346,7 @@ j_data1 %&gt;%
 
 ---
 
-# Your turn
+# Your turn: t-test
 
 
 ```r
@@ -2220,15 +2375,21 @@ null_distribution %&gt;%
   theme_bw(base_size = 20)  
 ```
 
-<div class="countdown" id="timer_5edbfb5d" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_5edc296d" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
 
-# Let's do an ANOVA for the independence of flake length by _all_ types of raw material in our stone artefacts. Are the lengths of flakes equivalent or different for _all_ categories of raw material? 
+# Let's do an ANOVA for the independence of flake length by _all_ types of raw material in our stone artefacts. 
+
+--
+
+# Are the lengths of flakes equivalent or different for _all_ categories of raw material? 
 
 ---
+
+
 
 
 
@@ -2445,8 +2606,6 @@ ggplot(j_data3) +
 
 
 
-
-
 class: split-40
 count: false
  
@@ -2454,24 +2613,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-*library(infer)
-```
-]
- 
-.right-output-anova-2-auto[
-
-]
-
----
-class: split-40
-count: false
- 
-Compute the observed statistic, and use our real data to generate many fake datasets based on our null hypothesis
-.left-code-anova-2-auto[
-
-```r
-library(infer)  
-
 # compute F statistic
 *j_data3
 ```
@@ -2481,26 +2622,24 @@ library(infer)
 
 ```
 # A tibble: 4,826 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
- 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
- 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
- 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
- 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
- 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
- 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
- 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
- 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
-10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
-# … with 4,816 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0 &lt;NA&gt;    Hertz   Trans     NA
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 4,816 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -2512,8 +2651,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
 * specify(Length ~ Material)
@@ -2550,8 +2687,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2577,8 +2712,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2601,26 +2734,24 @@ j_data3 %&gt;%
 
 ```
 # A tibble: 4,826 x 48
-   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex
-   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
- 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0
- 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0
- 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0
- 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0
- 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0
- 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0
- 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0
- 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0
- 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0
-10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0
-# … with 4,816 more rows, and 37 more variables: Cortype &lt;chr&gt;, Initiat &lt;chr&gt;,
-#   Breaks &lt;chr&gt;, Noseg &lt;dbl&gt;, Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;,
-#   Overhang &lt;chr&gt;, NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;,
-#   Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;, NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;,
-#   RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
-#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;,
-#   RetScNo &lt;dbl&gt;, Term &lt;chr&gt;, Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;,
-#   Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;, elongation &lt;dbl&gt;
+   Site  Square  Spit Group Artno Material Colour Weight Length Artclas Cortex Cortype Initiat Breaks Noseg
+   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+ 1 J     B          1     1     1 Chert    Brown    1.83  22.0  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 2 J     B          1     1     5 Chert    Grey     0.05   7.07 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 3 J     B          1     1     7 Chert    Dk Br…   0.03   5.72 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 4 J     B          1     1    10 Chert    Grey     0.25  14.3  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 5 J     B          1     1    11 Chert    Brown    0.33  11.2  Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 6 J     B          1     1    18 Chert    Lt Br…   0.03   3.58 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 7 J     B          1     1    19 Chert    Red      0.02   4.79 Flake        0 &lt;NA&gt;    Hertz   Trans     NA
+ 8 J     B          1     1    20 Chert    Grey     0.01   3.29 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+ 9 J     B          1     1    21 Chert    Brown    0.06   6.02 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+10 J     B          1     1    22 Chert    Pink     0.01   3.51 Flake        0 &lt;NA&gt;    Hertz   &lt;NA&gt;      NA
+# … with 4,816 more rows, and 33 more variables: Platwid &lt;dbl&gt;, Plat &lt;chr&gt;, Focal &lt;lgl&gt;, Overhang &lt;chr&gt;,
+#   NoDS &lt;dbl&gt;, NoPS &lt;dbl&gt;, Rtch &lt;chr&gt;, Plat_2 &lt;chr&gt;, Focal_2 &lt;lgl&gt;, Overhang_2 &lt;chr&gt;, NoDS_2 &lt;dbl&gt;,
+#   NoPS_2 &lt;dbl&gt;, Rtch_2 &lt;chr&gt;, RetOri &lt;chr&gt;, Retype &lt;chr&gt;, Retloc &lt;chr&gt;, Retlen &lt;dbl&gt;, Retdep &lt;dbl&gt;,
+#   Portion &lt;chr&gt;, Heat &lt;dbl&gt;, EdgeDam &lt;dbl&gt;, Weathering &lt;dbl&gt;, Corerot &lt;dbl&gt;, RetScNo &lt;dbl&gt;, Term &lt;chr&gt;,
+#   Janus &lt;lgl&gt;, Recycled &lt;lgl&gt;, Redirect &lt;lgl&gt;, Width &lt;dbl&gt;, Thick &lt;dbl&gt;, Platthic &lt;dbl&gt;, area &lt;dbl&gt;,
+#   elongation &lt;dbl&gt;
 ```
 ]
 
@@ -2632,8 +2763,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2683,8 +2812,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2736,8 +2863,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -2792,8 +2917,6 @@ Compute the observed statistic, and use our real data to generate many fake data
 .left-code-anova-2-auto[
 
 ```r
-library(infer)  
-
 # compute F statistic
 j_data3 %&gt;%  
   specify(Length ~ Material) %&gt;%  
@@ -3688,10 +3811,10 @@ aov(Length ~ Material,
 
 ---
 
-class: left, bottom
+class: left, top
 
 background-image: url(https://images.unsplash.com/photo-1505778276668-26b3ff7af103?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1643&amp;q=80)
-background-size: contain
+background-size: cover
 
 # Exploring the data with PCA and k-means
 
@@ -3699,9 +3822,9 @@ background-size: contain
 
 # Let's do a Principal Components Analysis to reduce our multivariate data into smaller set of variables to observe trends, clusters and outliers
 
----
+--
 
-# Our goal is to find some linear combinations of original variables that captures the maximum variance in the data set. These determine the which combinations of variables contain the highest variability in our data.
+Our goal is to find some linear combinations of original variables that captures the maximum variance in the data set. These determine the which combinations of variables contain the highest variability in our data.
 
 ---
 
@@ -3754,10 +3877,20 @@ background-size: contain
 
 ---
 
-class: left, bottom
+class:  center, left
 
-background-image: url(figures/cascalheira-bicho-2020.png)
-background-size: contain
+.pull-left[
+![](figures/cascalheira-bicho-2020-cover.png)
+]
+
+
+.pull-right[
+![](figures/cascalheira-bicho-2020.png)
+]
+
+---
+
+# Can we use stone artefact assemblage attributes to identify short-term occupations at Palaeolithic sites?
 
 ---
 
@@ -3766,11 +3899,11 @@ background-size: contain
 class: split-40
 count: false
  
-Prepare data for PCA
+Get and prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-*library(tidyverse)
+*library(rio)
 ```
 ]
  
@@ -3782,14 +3915,15 @@ Prepare data for PCA
 class: split-40
 count: false
  
-Prepare data for PCA
+Get and prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-library(tidyverse)  
+library(rio)  
 
-# get the data
-*nb_data &lt;- rio::import("https://bit.ly/37is3Dj")
+# get the prepped data
+*nb_data &lt;- import("https://bit.ly/2XFcOB5",
+*                 setclass = "tibble")
 ```
 ]
  
@@ -3801,57 +3935,72 @@ library(tidyverse)
 class: split-40
 count: false
  
-Prepare data for PCA
+Get and prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-library(tidyverse)  
+library(rio)  
 
-# get the data
-nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
+# get the prepped data
+nb_data &lt;- import("https://bit.ly/2XFcOB5",  
+                  setclass = "tibble")  
+
+# inspect the data
+*str(nb_data)
+```
+]
+ 
+.right-output-pca-1-auto[
+
+```
+tibble [16 × 9] (S3: tbl_df/tbl/data.frame)
+ $ chipFreq     : num [1:16] 0.415 0.356 0.264 0.387 0.44 ...
+ $ coreFreq     : num [1:16] 0.041 0.0161 0.0461 0.0142 0.0181 ...
+ $ blankFreq    : num [1:16] 0.435 0.543 0.34 0.493 0.463 ...
+ $ retFreq      : num [1:16] 0.0996 0.0605 0.3149 0.0781 0.0531 ...
+ $ featFreq     : num [1:16] 0 2.22 0 0 0 ...
+ $ toolDiv      : num [1:16] 2.66 3.69 1.87 3.14 3.38 ...
+ $ lithDens     : num [1:16] 4096 3304 3359 2393 1291 ...
+ $ EstimatedArea: int [1:16] 50 8 70 70 40 70 60 100 50 100 ...
+ $ Sites        : chr [1:16] "AR I" "CPM III Trench" "CPM I Upper" "CPM II Upper" ...
+```
+]
+
+---
+class: split-40
+count: false
+ 
+Get and prepare data for PCA
+.left-code-pca-1-auto[
+
+```r
+library(rio)  
+
+# get the prepped data
+nb_data &lt;- import("https://bit.ly/2XFcOB5",  
+                  setclass = "tibble")  
+
+# inspect the data
+str(nb_data)  
 
 # prepare the data
-*nb_data
+*nb_data_rownames &lt;- nb_data
 ```
 ]
  
 .right-output-pca-1-auto[
 
 ```
-            Sites EstimatedArea DepositThickness SampledVolume Artifacts Cores
-1            AR I            50             0.25          0.50      2048    84
-2  CPM III Trench             8             0.15          0.45      1487    24
-3     CPM I Upper            70             0.35          1.40      4703   217
-4    CPM II Upper            70             0.25          1.00      2393    34
-5   CPM II Middle            40             0.25          1.75      2260    41
-6     CPM I Lower            70             0.30          2.10      1766    78
-7   CPM III Upper            60             0.25          0.75      2148    90
-8       CPM III S           100             0.35          1.40      5179    75
-9           CPM V            50             0.20          1.80      2701    33
-10          CR II           100             0.25          1.50      2151    46
-11             PC           100             0.25          1.00      2431    29
-12             QS             5             0.05          0.25      1438     8
-13   VB Shelter 2             2             0.50          1.00        54     0
-14   VB Shelter Z             8             0.15          0.90      1156    22
-15   VB Shelter B            30             0.25          6.00     12819    80
-16  Picareiro F/G            25             0.35          5.60      1954    19
-   Blanks Chips RetouchedTools ToolTypes Features
-1     890   849            204        38        0
-2     807   529             90        35        1
-3    1601  1241           1481        72        0
-4    1180   925            187        43        0
-5    1047   995            120        37        0
-6     843   585            202        45        1
-7    1047   699            268        50        0
-8    2597  1841            382        55        2
-9    1033  1397            162        39        0
-10   1264   607            171        41        1
-11    956  1148            205        41        0
-12    378   975              8         2        0
-13      8    13             31         3        0
-14    323   581             33        15        0
-15   2304  7867            141        31        1
-16    261  1510            121        43        1
+tibble [16 × 9] (S3: tbl_df/tbl/data.frame)
+ $ chipFreq     : num [1:16] 0.415 0.356 0.264 0.387 0.44 ...
+ $ coreFreq     : num [1:16] 0.041 0.0161 0.0461 0.0142 0.0181 ...
+ $ blankFreq    : num [1:16] 0.435 0.543 0.34 0.493 0.463 ...
+ $ retFreq      : num [1:16] 0.0996 0.0605 0.3149 0.0781 0.0531 ...
+ $ featFreq     : num [1:16] 0 2.22 0 0 0 ...
+ $ toolDiv      : num [1:16] 2.66 3.69 1.87 3.14 3.38 ...
+ $ lithDens     : num [1:16] 4096 3304 3359 2393 1291 ...
+ $ EstimatedArea: int [1:16] 50 8 70 70 40 70 60 100 50 100 ...
+ $ Sites        : chr [1:16] "AR I" "CPM III Trench" "CPM I Upper" "CPM II Upper" ...
 ```
 ]
 
@@ -3859,151 +4008,38 @@ nb_data &lt;- rio::import("https://bit.ly/37is3Dj")
 class: split-40
 count: false
  
-Prepare data for PCA
+Get and prepare data for PCA
 .left-code-pca-1-auto[
 
 ```r
-library(tidyverse)  
+library(rio)  
 
-# get the data
-nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
+# get the prepped data
+nb_data &lt;- import("https://bit.ly/2XFcOB5",  
+                  setclass = "tibble")  
+
+# inspect the data
+str(nb_data)  
 
 # prepare the data
-nb_data %&gt;%  
-* mutate(chipFreq = Chips/Artifacts,
-*        coreFreq = Cores/Artifacts,
-*        blankFreq = Blanks/Artifacts,
-*        retFreq  = RetouchedTools/Artifacts,
-*        featFreq = Features/SampledVolume,
-*        toolDiv = ToolTypes/sqrt(RetouchedTools),
-*        lithDens = Artifacts/SampledVolume
-* )
+nb_data_rownames &lt;- nb_data %&gt;%  
+* column_to_rownames(var="Sites")
 ```
 ]
  
 .right-output-pca-1-auto[
 
 ```
-            Sites EstimatedArea DepositThickness SampledVolume Artifacts Cores
-1            AR I            50             0.25          0.50      2048    84
-2  CPM III Trench             8             0.15          0.45      1487    24
-3     CPM I Upper            70             0.35          1.40      4703   217
-4    CPM II Upper            70             0.25          1.00      2393    34
-5   CPM II Middle            40             0.25          1.75      2260    41
-6     CPM I Lower            70             0.30          2.10      1766    78
-7   CPM III Upper            60             0.25          0.75      2148    90
-8       CPM III S           100             0.35          1.40      5179    75
-9           CPM V            50             0.20          1.80      2701    33
-10          CR II           100             0.25          1.50      2151    46
-11             PC           100             0.25          1.00      2431    29
-12             QS             5             0.05          0.25      1438     8
-13   VB Shelter 2             2             0.50          1.00        54     0
-14   VB Shelter Z             8             0.15          0.90      1156    22
-15   VB Shelter B            30             0.25          6.00     12819    80
-16  Picareiro F/G            25             0.35          5.60      1954    19
-   Blanks Chips RetouchedTools ToolTypes Features  chipFreq    coreFreq blankFreq
-1     890   849            204        38        0 0.4145508 0.041015625 0.4345703
-2     807   529             90        35        1 0.3557498 0.016139879 0.5427034
-3    1601  1241           1481        72        0 0.2638741 0.046140761 0.3404210
-4    1180   925            187        43        0 0.3865441 0.014208107 0.4931049
-5    1047   995            120        37        0 0.4402655 0.018141593 0.4632743
-6     843   585            202        45        1 0.3312571 0.044167610 0.4773499
-7    1047   699            268        50        0 0.3254190 0.041899441 0.4874302
-8    2597  1841            382        55        2 0.3554740 0.014481560 0.5014482
-9    1033  1397            162        39        0 0.5172158 0.012217697 0.3824509
-10   1264   607            171        41        1 0.2821943 0.021385402 0.5876337
-11    956  1148            205        41        0 0.4722336 0.011929247 0.3932538
-12    378   975              8         2        0 0.6780250 0.005563282 0.2628651
-13      8    13             31         3        0 0.2407407 0.000000000 0.1481481
-14    323   581             33        15        0 0.5025952 0.019031142 0.2794118
-15   2304  7867            141        31        1 0.6136984 0.006240736 0.1797332
-16    261  1510            121        43        1 0.7727738 0.009723644 0.1335722
-       retFreq  featFreq   toolDiv  lithDens
-1  0.099609375 0.0000000 2.6605322 4096.0000
-2  0.060524546 2.2222222 3.6893239 3304.4444
-3  0.314905380 0.0000000 1.8709189 3359.2857
-4  0.078144588 0.0000000 3.1444714 2393.0000
-5  0.053097345 0.0000000 3.3776224 1291.4286
-6  0.114382786 0.4761905 3.1661890  840.9524
-7  0.124767225 0.0000000 3.0542361 2864.0000
-8  0.073759413 1.4285714 2.8140448 3699.2857
-9  0.059977786 0.0000000 3.0641294 1500.5556
-10 0.079497908 0.6666667 3.1353484 1434.0000
-11 0.084327437 0.0000000 2.8635642 2431.0000
-12 0.005563282 0.0000000 0.7071068 5752.0000
-13 0.574074074 0.0000000 0.5388159   54.0000
-14 0.028546713 0.0000000 2.6111648 1284.4444
-15 0.010999298 0.1666667 2.6106710 2136.5000
-16 0.061924258 0.1785714 3.9090909  348.9286
-```
-]
-
----
-class: split-40
-count: false
- 
-Prepare data for PCA
-.left-code-pca-1-auto[
-
-```r
-library(tidyverse)  
-
-# get the data
-nb_data &lt;- rio::import("https://bit.ly/37is3Dj")  
-
-# prepare the data
-nb_data %&gt;%  
-  mutate(chipFreq = Chips/Artifacts,  
-         coreFreq = Cores/Artifacts,  
-         blankFreq = Blanks/Artifacts,  
-         retFreq  = RetouchedTools/Artifacts,  
-         featFreq = Features/SampledVolume,  
-         toolDiv = ToolTypes/sqrt(RetouchedTools),  
-         lithDens = Artifacts/SampledVolume  
-  ) %&gt;%  
-* select(chipFreq, coreFreq, blankFreq,
-*        retFreq, featFreq, toolDiv,
-*        lithDens, EstimatedArea)
-```
-]
- 
-.right-output-pca-1-auto[
-
-```
-    chipFreq    coreFreq blankFreq     retFreq  featFreq   toolDiv  lithDens
-1  0.4145508 0.041015625 0.4345703 0.099609375 0.0000000 2.6605322 4096.0000
-2  0.3557498 0.016139879 0.5427034 0.060524546 2.2222222 3.6893239 3304.4444
-3  0.2638741 0.046140761 0.3404210 0.314905380 0.0000000 1.8709189 3359.2857
-4  0.3865441 0.014208107 0.4931049 0.078144588 0.0000000 3.1444714 2393.0000
-5  0.4402655 0.018141593 0.4632743 0.053097345 0.0000000 3.3776224 1291.4286
-6  0.3312571 0.044167610 0.4773499 0.114382786 0.4761905 3.1661890  840.9524
-7  0.3254190 0.041899441 0.4874302 0.124767225 0.0000000 3.0542361 2864.0000
-8  0.3554740 0.014481560 0.5014482 0.073759413 1.4285714 2.8140448 3699.2857
-9  0.5172158 0.012217697 0.3824509 0.059977786 0.0000000 3.0641294 1500.5556
-10 0.2821943 0.021385402 0.5876337 0.079497908 0.6666667 3.1353484 1434.0000
-11 0.4722336 0.011929247 0.3932538 0.084327437 0.0000000 2.8635642 2431.0000
-12 0.6780250 0.005563282 0.2628651 0.005563282 0.0000000 0.7071068 5752.0000
-13 0.2407407 0.000000000 0.1481481 0.574074074 0.0000000 0.5388159   54.0000
-14 0.5025952 0.019031142 0.2794118 0.028546713 0.0000000 2.6111648 1284.4444
-15 0.6136984 0.006240736 0.1797332 0.010999298 0.1666667 2.6106710 2136.5000
-16 0.7727738 0.009723644 0.1335722 0.061924258 0.1785714 3.9090909  348.9286
-   EstimatedArea
-1             50
-2              8
-3             70
-4             70
-5             40
-6             70
-7             60
-8            100
-9             50
-10           100
-11           100
-12             5
-13             2
-14             8
-15            30
-16            25
+tibble [16 × 9] (S3: tbl_df/tbl/data.frame)
+ $ chipFreq     : num [1:16] 0.415 0.356 0.264 0.387 0.44 ...
+ $ coreFreq     : num [1:16] 0.041 0.0161 0.0461 0.0142 0.0181 ...
+ $ blankFreq    : num [1:16] 0.435 0.543 0.34 0.493 0.463 ...
+ $ retFreq      : num [1:16] 0.0996 0.0605 0.3149 0.0781 0.0531 ...
+ $ featFreq     : num [1:16] 0 2.22 0 0 0 ...
+ $ toolDiv      : num [1:16] 2.66 3.69 1.87 3.14 3.38 ...
+ $ lithDens     : num [1:16] 4096 3304 3359 2393 1291 ...
+ $ EstimatedArea: int [1:16] 50 8 70 70 40 70 60 100 50 100 ...
+ $ Sites        : chr [1:16] "AR I" "CPM III Trench" "CPM I Upper" "CPM II Upper" ...
 ```
 ]
 
@@ -4054,7 +4090,10 @@ Compute PCA
 
 ```r
 library(FactoMineR)  
-*row.names(working_data) &lt;- nb_data$Sites
+
+# compute PCA
+*res.pca &lt;- PCA(nb_data_rownames,
+*              graph = FALSE)
 ```
 ]
  
@@ -4071,37 +4110,28 @@ Compute PCA
 
 ```r
 library(FactoMineR)  
-row.names(working_data) &lt;- nb_data$Sites  
 
 # compute PCA
-*PCA(working_data,
-*   graph = FALSE)
+res.pca &lt;- PCA(nb_data_rownames,  
+               graph = FALSE)  
+
+# inspect eigenvalues
+*res.pca$eig
 ```
 ]
  
 .right-output-pca-2-auto[
 
 ```
-**Results for the Principal Component Analysis (PCA)**
-The analysis was performed on 16 individuals, described by 8 variables
-*The results are available in the following objects:
-
-   name               description                          
-1  "$eig"             "eigenvalues"                        
-2  "$var"             "results for the variables"          
-3  "$var$coord"       "coord. for the variables"           
-4  "$var$cor"         "correlations variables - dimensions"
-5  "$var$cos2"        "cos2 for the variables"             
-6  "$var$contrib"     "contributions of the variables"     
-7  "$ind"             "results for the individuals"        
-8  "$ind$coord"       "coord. for the individuals"         
-9  "$ind$cos2"        "cos2 for the individuals"           
-10 "$ind$contrib"     "contributions of the individuals"   
-11 "$call"            "summary statistics"                 
-12 "$call$centre"     "mean of the variables"              
-13 "$call$ecart.type" "standard error of the variables"    
-14 "$call$row.w"      "weights for the individuals"        
-15 "$call$col.w"      "weights for the variables"          
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
 ]
 
@@ -4114,50 +4144,41 @@ Compute PCA
 
 ```r
 library(FactoMineR)  
-row.names(working_data) &lt;- nb_data$Sites  
 
 # compute PCA
-PCA(working_data,  
-    graph = FALSE)  
+res.pca &lt;- PCA(nb_data_rownames,  
+               graph = FALSE)  
+
+# inspect eigenvalues
+res.pca$eig  
 ```
 ]
  
 .right-output-pca-2-auto[
 
 ```
-**Results for the Principal Component Analysis (PCA)**
-The analysis was performed on 16 individuals, described by 8 variables
-*The results are available in the following objects:
-
-   name               description                          
-1  "$eig"             "eigenvalues"                        
-2  "$var"             "results for the variables"          
-3  "$var$coord"       "coord. for the variables"           
-4  "$var$cor"         "correlations variables - dimensions"
-5  "$var$cos2"        "cos2 for the variables"             
-6  "$var$contrib"     "contributions of the variables"     
-7  "$ind"             "results for the individuals"        
-8  "$ind$coord"       "coord. for the individuals"         
-9  "$ind$cos2"        "cos2 for the individuals"           
-10 "$ind$contrib"     "contributions of the individuals"   
-11 "$call"            "summary statistics"                 
-12 "$call$centre"     "mean of the variables"              
-13 "$call$ecart.type" "standard error of the variables"    
-14 "$call$row.w"      "weights for the individuals"        
-15 "$call$col.w"      "weights for the variables"          
+       eigenvalue percentage of variance cumulative percentage of variance
+comp 1 2.76443434              34.555429                          34.55543
+comp 2 1.94019355              24.252419                          58.80785
+comp 3 1.24621394              15.577674                          74.38552
+comp 4 1.07640752              13.455094                          87.84062
+comp 5 0.60652553               7.581569                          95.42219
+comp 6 0.25615026               3.201878                          98.62406
+comp 7 0.08412005               1.051501                          99.67556
+comp 8 0.02595480               0.324435                         100.00000
 ```
 ]
 
 &lt;style&gt;
 .left-code-pca-2-auto {
   color: #777;
-  width: 70%;
+  width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
 .right-output-pca-2-auto {
-  width: 28%;
+  width: 60%;
   float: right;
   padding-left: 1%;
 }
@@ -4178,43 +4199,6 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# inspect eigenvalues, values &gt;1
-# indicate that component captures more
-# variability that any of
-# the original measurement variables
-*res.pca$eig
-```
-]
- 
-.right-output-pca-3-auto[
-
-```
-       eigenvalue percentage of variance cumulative percentage of variance
-comp 1 2.76443434              34.555429                          34.55543
-comp 2 1.94019355              24.252419                          58.80785
-comp 3 1.24621394              15.577674                          74.38552
-comp 4 1.07640752              13.455094                          87.84062
-comp 5 0.60652553               7.581569                          95.42219
-comp 6 0.25615026               3.201878                          98.62406
-comp 7 0.08412005               1.051501                          99.67556
-comp 8 0.02595480               0.324435                         100.00000
-```
-]
-
----
-class: split-40
-count: false
- 
-Inspect PCA
-.left-code-pca-3-auto[
-
-```r
-# inspect eigenvalues, values &gt;1
-# indicate that component captures more
-# variability that any of
-# the original measurement variables
-res.pca$eig  
-
 # inspect distribution of PCs
 *library(factoextra)
 ```
@@ -4222,17 +4206,6 @@ res.pca$eig
  
 .right-output-pca-3-auto[
 
-```
-       eigenvalue percentage of variance cumulative percentage of variance
-comp 1 2.76443434              34.555429                          34.55543
-comp 2 1.94019355              24.252419                          58.80785
-comp 3 1.24621394              15.577674                          74.38552
-comp 4 1.07640752              13.455094                          87.84062
-comp 5 0.60652553               7.581569                          95.42219
-comp 6 0.25615026               3.201878                          98.62406
-comp 7 0.08412005               1.051501                          99.67556
-comp 8 0.02595480               0.324435                         100.00000
-```
 ]
 
 ---
@@ -4243,12 +4216,6 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# inspect eigenvalues, values &gt;1
-# indicate that component captures more
-# variability that any of
-# the original measurement variables
-res.pca$eig  
-
 # inspect distribution of PCs
 library(factoextra)  
 *fviz_screeplot(res.pca)
@@ -4256,20 +4223,7 @@ library(factoextra)
 ]
  
 .right-output-pca-3-auto[
-
-```
-       eigenvalue percentage of variance cumulative percentage of variance
-comp 1 2.76443434              34.555429                          34.55543
-comp 2 1.94019355              24.252419                          58.80785
-comp 3 1.24621394              15.577674                          74.38552
-comp 4 1.07640752              13.455094                          87.84062
-comp 5 0.60652553               7.581569                          95.42219
-comp 6 0.25615026               3.201878                          98.62406
-comp 7 0.08412005               1.051501                          99.67556
-comp 8 0.02595480               0.324435                         100.00000
-```
-
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_3_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_2_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -4280,12 +4234,6 @@ Inspect PCA
 .left-code-pca-3-auto[
 
 ```r
-# inspect eigenvalues, values &gt;1
-# indicate that component captures more
-# variability that any of
-# the original measurement variables
-res.pca$eig  
-
 # inspect distribution of PCs
 library(factoextra)  
 fviz_screeplot(res.pca)  
@@ -4293,32 +4241,19 @@ fviz_screeplot(res.pca)
 ]
  
 .right-output-pca-3-auto[
-
-```
-       eigenvalue percentage of variance cumulative percentage of variance
-comp 1 2.76443434              34.555429                          34.55543
-comp 2 1.94019355              24.252419                          58.80785
-comp 3 1.24621394              15.577674                          74.38552
-comp 4 1.07640752              13.455094                          87.84062
-comp 5 0.60652553               7.581569                          95.42219
-comp 6 0.25615026               3.201878                          98.62406
-comp 7 0.08412005               1.051501                          99.67556
-comp 8 0.02595480               0.324435                         100.00000
-```
-
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_4_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3_auto_3_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
 .left-code-pca-3-auto {
   color: #777;
-  width: 70%;
+  width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
 .right-output-pca-3-auto {
-  width: 28%;
+  width: 60%;
   float: right;
   padding-left: 1%;
 }
@@ -4329,6 +4264,67 @@ comp 8 0.02595480               0.324435                         100.00000
 ---
 
 
+
+
+class: split-40
+count: false
+ 
+Contributions of variables to the PCs
+.left-code-pca-3b-auto[
+
+```r
+# Contributions of
+# variables to PC1
+*fviz_contrib(res.pca,
+*            choice = "var",
+*            axes = 1,
+*            top = 10)
+```
+]
+ 
+.right-output-pca-3b-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3b_auto_1_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+Contributions of variables to the PCs
+.left-code-pca-3b-auto[
+
+```r
+# Contributions of
+# variables to PC1
+fviz_contrib(res.pca,  
+             choice = "var",  
+             axes = 1,  
+             top = 10)  
+```
+]
+ 
+.right-output-pca-3b-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/pca-3b_auto_2_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-code-pca-3b-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-pca-3b-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+---
 
 
 
@@ -4339,7 +4335,7 @@ Visualise PCA results
 .left-code-pca-4-auto[
 
 ```r
-# create biplot
+# draw biplot
 *fviz_pca_biplot(res.pca)
 ```
 ]
@@ -4356,7 +4352,7 @@ Visualise PCA results
 .left-code-pca-4-auto[
 
 ```r
-# create biplot
+# draw biplot
 fviz_pca_biplot(res.pca)  
 ```
 ]
@@ -4388,57 +4384,32 @@ fviz_pca_biplot(res.pca)
 
 
 ```r
-library(rio)
-
-# get the data
-nb_data &lt;- import("https://bit.ly/37is3Dj")
+# get the prepped data
+nb_data &lt;- rio::import("https://bit.ly/2XFcOB5", setclass = "tibble")
 
 # prepare the data
-working_data &lt;- nb_data %&gt;%
-  mutate(chipFreq = Chips/Artifacts,
-         coreFreq = Cores/Artifacts,
-         blankFreq = Blanks/Artifacts,
-         retFreq  = RetouchedTools/Artifacts,
-         featFreq = Features/SampledVolume,
-         toolDiv = ToolTypes/sqrt(RetouchedTools),
-         lithDens = Artifacts/SampledVolume) %&gt;%
-  select(chipFreq, coreFreq, blankFreq, 
-         retFreq, featFreq, toolDiv, 
-         lithDens, EstimatedArea)
+nb_data_rownames &lt;- nb_data %&gt;% column_to_rownames(var="Sites")
 ```
 
 
 ```r
 library(FactoMineR)
-row.names(working_data) &lt;- nb_data$Sites
 
 # compute PCA
-res.pca &lt;- PCA(working_data, 
-               graph = FALSE)
-```
+res.pca &lt;- PCA(nb_data_rownames, graph = FALSE)
 
-<div class="countdown" id="timer_5edbfbaf" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-
----
-
-
-```r
+# inspect eigenvalues
 res.pca$eig
-
-library(factoextra)
-fviz_screeplot(res.pca)
 ```
 
 
 ```r
-# create biplot
+# draw biplot
 fviz_pca_biplot(res.pca)
 ```
 
-<div class="countdown" id="timer_5edbfb02" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_5edc2c2c" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ---
 
@@ -4540,6 +4511,8 @@ background-size: contain
 
 
 
+
+
 class: split-40
 count: false
  
@@ -4616,13 +4589,15 @@ j_data4 &lt;-  j_data %&gt;%
   filter(Material %in% c("Silcrete")) %&gt;%  
   select(Length,  
          Thick,  
-         Width) %&gt;%  
-* drop_na()
+         Width)  
+
+# inspect
+*ggplot(j_data4)
 ```
 ]
  
 .right-output-k-1-auto[
-
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_4_output-1.png" width="432" /&gt;
 ]
 
 ---
@@ -4640,11 +4615,13 @@ j_data4 &lt;-  j_data %&gt;%
   filter(Material %in% c("Silcrete")) %&gt;%  
   select(Length,  
          Thick,  
-         Width) %&gt;%  
-  drop_na()  
+         Width)  
 
 # inspect
-*ggplot(j_data4)
+ggplot(j_data4) +  
+* aes(Length,
+*     Thick,
+*     colour = Width)
 ```
 ]
  
@@ -4667,14 +4644,14 @@ j_data4 &lt;-  j_data %&gt;%
   filter(Material %in% c("Silcrete")) %&gt;%  
   select(Length,  
          Thick,  
-         Width) %&gt;%  
-  drop_na()  
+         Width)  
 
 # inspect
 ggplot(j_data4) +  
-* aes(Length,
-*     Thick,
-*     colour = Width)
+  aes(Length,  
+      Thick,  
+      colour = Width) +  
+* geom_point()
 ```
 ]
  
@@ -4697,39 +4674,7 @@ j_data4 &lt;-  j_data %&gt;%
   filter(Material %in% c("Silcrete")) %&gt;%  
   select(Length,  
          Thick,  
-         Width) %&gt;%  
-  drop_na()  
-
-# inspect
-ggplot(j_data4) +  
-  aes(Length,  
-      Thick,  
-      colour = Width) +  
-* geom_point()
-```
-]
- 
-.right-output-k-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_7_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-Prepare and inspect our data
-.left-code-k-1-auto[
-
-```r
-# filter the data to
-# focus on our question
-# prepare data
-j_data4 &lt;-  j_data %&gt;%  
-  filter(Material %in% c("Silcrete")) %&gt;%  
-  select(Length,  
-         Thick,  
-         Width) %&gt;%  
-  drop_na()  
+         Width)  
 
 # inspect
 ggplot(j_data4) +  
@@ -4742,7 +4687,7 @@ ggplot(j_data4) +
 ]
  
 .right-output-k-1-auto[
-&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_8_output-1.png" width="432" /&gt;
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-1_auto_7_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
@@ -4775,7 +4720,8 @@ Find our how many clusters we need
 .left-code-k-2-auto[
 
 ```r
-# find an appropriate number of clusters to use.
+# find an appropriate
+# number of clusters to use.
 *library(factoextra)
 ```
 ]
@@ -4792,7 +4738,8 @@ Find our how many clusters we need
 .left-code-k-2-auto[
 
 ```r
-# find an appropriate number of clusters to use.
+# find an appropriate
+# number of clusters to use.
 library(factoextra)  
 
 *fviz_nbclust(j_data4,
@@ -4813,7 +4760,8 @@ Find our how many clusters we need
 .left-code-k-2-auto[
 
 ```r
-# find an appropriate number of clusters to use.
+# find an appropriate
+# number of clusters to use.
 library(factoextra)  
 
 fviz_nbclust(j_data4,  
@@ -4830,13 +4778,13 @@ fviz_nbclust(j_data4,
 &lt;style&gt;
 .left-code-k-2-auto {
   color: #777;
-  width: 65%;
+  width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
 .right-output-k-2-auto {
-  width: 30%;
+  width: 60%;
   float: right;
   padding-left: 1%;
 }
@@ -4848,6 +4796,8 @@ fviz_nbclust(j_data4,
 
 
 
+
+
 class: split-40
 count: false
  
@@ -4856,14 +4806,37 @@ Compute the cluster analysis
 
 ```r
 # compute clusters
-*kmeans_output &lt;- kmeans(j_data4,
-*                       centers = 4,
-*                       nstart = 50)
+*kmeans(j_data4,
+*      centers = 4,
+*      nstart = 50)
 ```
 ]
  
 .right-output-k-3-auto[
 
+```
+K-means clustering with 4 clusters of sizes 40, 14, 6, 34
+
+Cluster means:
+     Length    Thick     Width
+1 11.322250 2.889250  9.880750
+2 13.805714 3.504286 16.695714
+3 25.871667 6.713333 18.836667
+4  6.889118 2.038529  6.357941
+
+Clustering vector:
+ [1] 1 4 2 4 1 4 4 4 4 1 1 2 1 1 1 2 1 3 1 4 1 1 1 4 2 4 1 4 4 4 1 1 3 2 4 4 4 4 4 1 4 4 1 4 1 3 1 2 1 4 4
+[52] 1 1 1 4 1 1 2 4 2 3 1 1 4 2 1 3 2 2 2 1 4 4 1 1 1 2 4 1 2 1 1 4 4 1 3 4 4 4 4 1 1 1 1
+
+Within cluster sum of squares by cluster:
+[1] 559.1925 242.5442 439.3825 283.3241
+ (between_SS / total_SS =  70.7 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+```
 ]
 
 ---
@@ -4875,9 +4848,9 @@ Compute the cluster analysis
 
 ```r
 # compute clusters
-kmeans_output &lt;- kmeans(j_data4,  
-                        centers = 4,  
-                        nstart = 50)  
+kmeans(j_data4,  
+       centers = 4,  
+       nstart = 50)  
 
 # view tidy output
 *tidy(kmeans_output)
@@ -4887,13 +4860,37 @@ kmeans_output &lt;- kmeans(j_data4,
 .right-output-k-3-auto[
 
 ```
+K-means clustering with 4 clusters of sizes 14, 40, 6, 34
+
+Cluster means:
+     Length    Thick     Width
+1 13.805714 3.504286 16.695714
+2 11.322250 2.889250  9.880750
+3 25.871667 6.713333 18.836667
+4  6.889118 2.038529  6.357941
+
+Clustering vector:
+ [1] 2 4 1 4 2 4 4 4 4 2 2 1 2 2 2 1 2 3 2 4 2 2 2 4 1 4 2 4 4 4 2 2 3 1 4 4 4 4 4 2 4 4 2 4 2 3 2 1 2 4 4
+[52] 2 2 2 4 2 2 1 4 1 3 2 2 4 1 2 3 1 1 1 2 4 4 2 2 2 1 4 2 1 2 2 4 4 2 3 4 4 4 4 2 2 2 2
+
+Within cluster sum of squares by cluster:
+[1] 242.5442 559.1925 439.3825 283.3241
+ (between_SS / total_SS =  70.7 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+```
+
+```
 # A tibble: 4 x 6
      x1    x2    x3  size withinss cluster
   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
-1 25.9   6.71 18.8      6     439. 1      
-2  6.89  2.04  6.36    34     283. 2      
-3 11.3   2.89  9.88    40     559. 3      
-4 13.8   3.50 16.7     14     243. 4      
+1 13.8   3.50 16.7     14     243. 1      
+2 11.3   2.89  9.88    40     559. 2      
+3  6.89  2.04  6.36    34     283. 3      
+4 25.9   6.71 18.8      6     439. 4      
 ```
 ]
 
@@ -4906,45 +4903,70 @@ Compute the cluster analysis
 
 ```r
 # compute clusters
-kmeans_output &lt;- kmeans(j_data4,  
-                        centers = 4,  
-                        nstart = 50)  
+kmeans(j_data4,  
+       centers = 4,  
+       nstart = 50)  
 
 # view tidy output
 tidy(kmeans_output)  
 
 # see which cluster each
 # artefact is in
-*augment(kmeans_output, j_data4)
+*augment(kmeans_output,
+*       j_data4)
 ```
 ]
  
 .right-output-k-3-auto[
 
 ```
+K-means clustering with 4 clusters of sizes 6, 34, 40, 14
+
+Cluster means:
+     Length    Thick     Width
+1 25.871667 6.713333 18.836667
+2  6.889118 2.038529  6.357941
+3 11.322250 2.889250  9.880750
+4 13.805714 3.504286 16.695714
+
+Clustering vector:
+ [1] 3 2 4 2 3 2 2 2 2 3 3 4 3 3 3 4 3 1 3 2 3 3 3 2 4 2 3 2 2 2 3 3 1 4 2 2 2 2 2 3 2 2 3 2 3 1 3 4 3 2 2
+[52] 3 3 3 2 3 3 4 2 4 1 3 3 2 4 3 1 4 4 4 3 2 2 3 3 3 4 2 3 4 3 3 2 2 3 1 2 2 2 2 3 3 3 3
+
+Within cluster sum of squares by cluster:
+[1] 439.3825 283.3241 559.1925 242.5442
+ (between_SS / total_SS =  70.7 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+```
+
+```
 # A tibble: 4 x 6
      x1    x2    x3  size withinss cluster
   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
 1 13.8   3.50 16.7     14     243. 1      
-2 25.9   6.71 18.8      6     439. 2      
+2 11.3   2.89  9.88    40     559. 2      
 3  6.89  2.04  6.36    34     283. 3      
-4 11.3   2.89  9.88    40     559. 4      
+4 25.9   6.71 18.8      6     439. 4      
 ```
 
 ```
 # A tibble: 94 x 4
    Length Thick Width .cluster
     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   
- 1  10.9   3.14 13.0  4       
+ 1  10.9   3.14 13.0  2       
  2   6.72  2.06  6.49 3       
  3  10.9   1.96 16.1  1       
  4   6.55  2.9   9.46 3       
- 5  12.3   2.22  9.75 4       
+ 5  12.3   2.22  9.75 2       
  6   5.07  1.27 10.4  3       
  7   7.97  2.34  8.14 3       
  8   7.58  2.81  6.23 3       
  9   8.15  2.31  4.81 3       
-10   8.89  2.02  9.03 4       
+10   8.89  2.02  9.03 2       
 # … with 84 more rows
 ```
 ]
@@ -5026,16 +5048,16 @@ j_data4 %&gt;%
 # A tibble: 94 x 4
    Length Thick Width cluster
     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
- 1  10.9   3.14 13.0        1
+ 1  10.9   3.14 13.0        2
  2   6.72  2.06  6.49       3
- 3  10.9   1.96 16.1        2
+ 3  10.9   1.96 16.1        1
  4   6.55  2.9   9.46       3
- 5  12.3   2.22  9.75       1
+ 5  12.3   2.22  9.75       2
  6   5.07  1.27 10.4        3
  7   7.97  2.34  8.14       3
  8   7.58  2.81  6.23       3
  9   8.15  2.31  4.81       3
-10   8.89  2.02  9.03       1
+10   8.89  2.02  9.03       2
 # … with 84 more rows
 ```
 ]
@@ -5169,6 +5191,25 @@ fviz_cluster(kmeans_output,
 &lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-5_auto_2_output-1.png" width="432" /&gt;
 ]
 
+---
+class: split-40
+count: false
+ 
+Visualise the clusters with a PCA
+.left-code-k-5-auto[
+
+```r
+# visualise the clusters in PCA
+fviz_cluster(kmeans_output,  
+             data = j_data4) +  
+  theme_minimal()  
+```
+]
+ 
+.right-output-k-5-auto[
+&lt;img src="stat-inference-and-exploration-for-archaeologists_files/figure-html/k-5_auto_3_output-1.png" width="432" /&gt;
+]
+
 &lt;style&gt;
 .left-code-k-5-auto {
   color: #777;
@@ -5199,10 +5240,7 @@ background-size: cover
 ```r
 j_data4 &lt;-  j_data %&gt;% 
   filter(Material %in% c("Silcrete")) %&gt;% 
-  select(Length, 
-         Thick,
-         Width) %&gt;% 
-  drop_na() 
+  select(Length, Thick, Width)
 ```
 
 
@@ -5210,37 +5248,45 @@ j_data4 &lt;-  j_data %&gt;%
 # find an appropriate number of clusters to use.
 library(factoextra)
 
-fviz_nbclust(j_data4, 
-             kmeans, 
-             method = "wss") +
+fviz_nbclust(j_data4, kmeans, method = "wss") +
   geom_vline(xintercept = 4)
 ```
 
 
 ```r
 # compute clusters
-kmeans_output &lt;- kmeans(j_data4, 
-                        centers = 4, 
-                        nstart = 50)
+set.seed(7)
+kmeans_output &lt;- kmeans(j_data4, centers = 4, nstart = 50)
 ```
 
 
 ```r
-# visualise the clusters 
-# in our data
-j_data4 %&gt;%
-  mutate(cluster = kmeans_output$cluster) %&gt;%
-  ggplot(aes(Length, 
-             Thick, 
-             color = factor(cluster), 
-             label = cluster)) +
-  geom_text() +
+# visualise the clusters in PCA
+fviz_cluster(kmeans_output, 
+             data = j_data4) +
   theme_minimal()
 ```
 
-<div class="countdown" id="timer_5edbfacb" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_5edc2afd" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
+
+---
+
+# What have we done today?
+
+- Hypothesis testing: chi-square, t-test, ANOVA
+
+- Exploration: Principal Components Analysis  
+
+- Exploration: k-means clustering   
+
+---
+
+
+background-image: url(https://images.unsplash.com/photo-1503980599186-9cc36eda351a?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80)
+background-size: cover
+
 
 ---
 
