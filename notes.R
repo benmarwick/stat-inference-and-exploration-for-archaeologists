@@ -424,6 +424,8 @@ j_data5_pca %>%
 # ------------ simpler PCA
 
 
+
+
   
 
 
