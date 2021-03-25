@@ -1,7 +1,7 @@
 ---
 title: "Statistical Inference and Data Exploration for Archaeologists"
 subtitle: "A Guide to using R for Beginners"
-author: "Ben Marwick, June 2020"
+author: "Ben Marwick, June 2020" 
 output:
   xaringan::moon_reader:
     css: "xaringan-themer.css"
