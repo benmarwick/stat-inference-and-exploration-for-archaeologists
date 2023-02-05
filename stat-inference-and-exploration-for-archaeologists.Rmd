@@ -541,10 +541,10 @@ background-size: cover
 ```{r, t-test-4, echo = FALSE, eval = FALSE, cache = TRUE, results = 'hide'}
 # get the t-test statistic, 
 # degrees of freedom, and p-value 
-j_data1 %>% 
+j_data2 %>% 
   t_test(Length ~ Material, 
          order = c("Volcanic", 
-                   "Quartzite")) %>% 
+                   "Chert")) %>% 
   str()
 ```
 
@@ -554,7 +554,7 @@ j_data1 %>%
 
 # How to report the results of our t-test?
   
-"There was no association between raw material and artefact type for Volcanic and Quartzite artefacts (t(36) = 0.62, p = 0.53)."
+"There was no association between raw material and artefact type for Volcanic and Quartzite artefacts (t(239) = 6.72, p < 0.0001)."
 
 ---
 
